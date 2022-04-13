@@ -1,0 +1,63 @@
+{% extends "frontend/master.html" %}
+{% load static %}
+{% load cart_template_tags %}
+{% block body %}
+        <section class="main-header" style="background-image:url(http://www.elathemes.com/themes/mobel/assets/images/gallery-2.jpg)">
+            <header>
+                <div class="container text-center">
+                    <h2 class="h2 title">Terms & Conditions</h2>
+                    <ol class="breadcrumb breadcrumb-inverted">
+                        <li><a href="{% url 'index' %}"><span class="icon icon-home"></span></a></li>
+                        <li><a>Terms & Condition</a></li>
+                     
+                    </ol>
+                </div>
+            </header>
+        </section>
+
+        <!-- ========================  Step wrapper ======================== -->
+
+        <section class="checkout">
+            <div class="container">
+
+                <header class="hidden">
+                    <h3 class="h3 title">Checkout - Step 4</h3>
+                </header>
+
+                <!-- ========================  Cart navigation ======================== -->
+
+               
+                <div class="cart-wrapper">
+
+                    <div class="note-block">
+
+                        <div class="row">
+                            <!-- === left content === -->
+
+                            <div class="col-md-12">
+
+                                <div class="white-block">
+
+                                    <div class="h4">Terms & Conditions</div>
+
+                                    <hr />
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            {{sitesetting.terms_and_condion}}
+                                        </div>
+                                    </div>
+
+                                </div> <!--/col-md-6-->
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+             
+
+            </div> <!--/container-->
+
+        </section>
+{% endblock %}

@@ -1,0 +1,257 @@
+﻿{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<!-- Mirrored from www.elathemes.com/themes/mobel/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 05 Feb 2022 12:23:06 GMT -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- Mobile Web-app fullscreen -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <!-- Meta tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="favicon.ico">
+
+    <!--Title-->
+    <title>NFCLIVING</title>
+    <style>
+        :root {
+            --themebg1: {{sitesetting.theme_background_color_1}};
+            --themebg2: {{sitesetting.theme_background_color_2}};
+
+            --theme: {{sitesetting.theme_color}};
+            --headbackground: {{sitesetting.nav_header_fixed_color_backgroud}};
+            --Footbackground: {{sitesetting.footer_background}};
+            --navHeaderFixedColorBackgroud: {{sitesetting.header_background}}4d;
+            --headingColor: {{sitesetting.heading_color}};
+            --navColor: {{sitesetting.nav_text_color}};
+            --navColorHover: {{sitesetting.nav_text_mouse_hover_color}};
+            --iconColor: {{sitesetting.icons_color}};
+        }
+        .search-product-image{
+            width: 100px;
+            display: inline;
+        }
+
+        .search-result-items-height {
+            margin: 0;
+            padding: 0;
+            overflow-y: scroll;
+            height: 100vh;
+        }
+        .logo img{
+            border-radius: 100% !important;
+            border: double 4px var(--headbackground) !important;
+            width: 100px !important;
+            height: 100px;
+        }
+
+        .themeBackgroundColor {
+            background: var(--themebg1) !important; 
+            background: -webkit-linear-gradient(to right, var(--themebg1), var(--themebg2), var(--themebg1)) !important;  
+            background: linear-gradient(to right, var(--themebg1), var(--themebg2), var(--themebg1)) !important;
+        }
+    </style>
+    <!--CSS bundle -->
+    <link rel="stylesheet" media="all" href="{% static 'assets/css/bundle.min.css' %}" />
+
+    <!--Google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600&amp;subset=latin-ext" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'assets/css/gallery.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    {% block card %}
+    {% endblock %}
+
+    {% block css %}
+    {% endblock %}
+</head>
+
+<body>
+
+    <div class="page-loader"></div>
+
+    <div class="wrapper">
+
+        {% include 'frontend/_header.html' %}
+        {% block body %}
+        {% endblock %}
+        {% include 'frontend/_footer.html' %}
+
+    </div> <!--/wrapper-->
+
+    <!--JS bundle -->
+    <script src="{% static 'assets/js/bundle.min.js' %}"></script>
+    <script src="{% static 'assets/js/pagination.min.js' %}"></script>
+    <!-- <script src="https://ld-wt73.template-help.com/wt_prod-19659/js/core.min.js"></script>
+    <script src="https://ld-wt73.template-help.com/wt_prod-19659/js/script.js"></script> -->
+    {% block js %}
+
+    {% endblock %}
+
+    <script>
+        $(document).ready(function(){
+
+            $('#loginform').submit(function(e){
+                e.preventDefault()
+                email = document.getElementById("CustomerEmail").value;
+                password = document.getElementById("CustomerPassword").value;
+                csrfmiddlewaretoken = document.getElementsByName("csrfmiddlewaretoken")[0].value;
+                // console.log('working.......'+email+'-')
+                $("#loginErrors").html("");
+                $.ajax({
+                    type:"POST",
+                    url:'{% url "userlogin" %}',
+                    data:{
+                        'csrfmiddlewaretoken': csrfmiddlewaretoken,
+                        'email':email,
+                        'password':password,
+                    },
+                    success : function(data){
+                        
+                        if(data['message'] == "Success"){
+                        
+                            if('{{nextRedirect}}' != 'False' ){
+                                window.location= '{{nextRedirect}}';
+                            }else{
+                                window.location= '/';
+                            }
+                        }
+                        else if(data['message'] == "inactive"){
+                            $("#loginErrors").html("<strong>Faild: </strong> <code>Account is inactive</code> <br>");
+                        }
+                        else{
+                            $("#loginErrors").html("<strong>Faild: </strong> <code>Invalid user name & password</code>");
+                        }
+                       
+                    }
+                });
+            });
+
+            $('#RegisterForm').submit((e)=>{
+                e.preventDefault()
+                
+                    username = document.getElementById("username").value;
+                    email = document.getElementById("email").value;
+                    password1 = document.getElementById("password1").value;
+                    password2 = document.getElementById("password2").value;
+                    csrfmiddlewaretoken = document.getElementsByName("csrfmiddlewaretoken")[0].value;
+                
+                    $("#signupErrors").html("");
+                    if(username == "" || password1== "" || password2 == ""){
+                        $("#signupErrors").html("<code>Please All Fields are with * Required</code>");
+                    }
+                    else{
+                    $.ajax({
+                    type:"POST",
+                    url:'{% url "usersignup" %}',
+                    data:{
+                        'csrfmiddlewaretoken': csrfmiddlewaretoken,
+                        'username':username,
+                        'email':email,
+                        'password1':password1,
+                        'password2':password2,
+                    },
+                    success : function(data){
+                        // console.log(data);
+                        if(data['message'] == "Success"){
+                            var para = '<p style="color:green;">Logined Success... Redirecting</p>'; 
+                            $('#signupErrors').html(para)
+                            if('{{nextRedirect}}' != 'False' ){
+                                window.location= '{{nextRedirect}}';
+                            }else{
+                                window.location= '/';
+                            }
+                        }
+                        else{
+                            // console.log(data.message);
+                            
+                            var para = '';
+                            
+                            for(let obj in data.message){
+                                para +=`<strong>${obj}: </strong> <code>${data.message[obj]}</code> <br>`;
+                            }
+
+                            $('#signupErrors').html(para)
+                            // if("email" in data['message'])
+                            //     $("#erroremail").html(data['message']['email'][0]);
+                            // if("password2" in data['message'])
+                            //     $("#errorpass").html(data['message']['password2'][0]);
+                        }
+                    }
+                })
+                }
+            });
+
+            $('.productsItem').keyup(function () {
+             
+               var productsItem = $(this).val();
+               dataSearched = []
+               $.ajax({
+                   url: '{% url "searchProducts" %}',
+                   method: 'GET',
+                   data:{productsItem: productsItem},
+                   success: function(data){
+                      
+                       $.each(data.data, function(i, v){
+                       
+                            console.log(v.has_discount)
+                           
+
+                            var price = '';
+
+                            if(v.has_discount){
+                                price = `
+                                <sup style="font-size: 15px; font-weight: bold; color: #0bc7f1;">£${v.discoun_price}</sup> 
+                                <br>                                     
+                                <sup style="text-decoration: line-through;">£${v.price}</sup>                                
+                                `;
+
+                            }else{
+                                price = `
+                                <sup style="font-size: 15px; font-weight: bold; color: #0bc7f1;">£${v.price}</sup>                                 
+                                `;
+                            }                            
+
+                            div = `
+                            <li>
+                                <div class="figure-block">
+                                    <div class="text" style="display: inline-table;">
+                                        <h2 class="title h5" style="margin-bottom:0px;"><a href="${v.url}">${v.name}</a></h2>
+                                        ${price}
+                                    </div>
+                                    <img class="search-product-image" src="${v.image}"  alt="">
+                                </div>
+                            </li>
+                            `;
+                            dataSearched.push(div)
+                        })
+                        console.log(dataSearched.length)
+                        if(dataSearched.length>0){
+                            $('.setSearchedPrducts').addClass('search-result-items-height')
+                            
+                        }else{
+                            $('.setSearchedPrducts').removeClass('search-result-items-height')
+                        }
+                    $('.setSearchedPrducts').html(dataSearched)
+                    // dataSearched.clear()
+                   }
+               })
+            });
+        })
+    </script>
+</body>
+
+
+<!-- Mirrored from www.elathemes.com/themes/mobel/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 05 Feb 2022 12:23:06 GMT -->
+</html>

@@ -1,0 +1,57 @@
+{% extends "frontend/master.html" %}
+{% load static %}
+{% load cart_template_tags %}
+{% block body %}
+        <section class="main-header main-header-blog" style="background-image:url({{sitesetting.blog_page_head_image.url}})">
+            <header>
+                <div class="container text-center">
+                    <h2 class="h2 title">Our Blog</h2>
+                    <p class="subtitle">A bit of history</p>
+                </div>
+            </header>
+        </section>
+
+
+        <!-- ========================  History ======================== -->
+        <section class="history">
+            <div class="container">
+               
+
+                <!-- === row item === -->
+                {% for blog in page_obj %}
+                <div class="row row-block">
+                    <div class="col-md-5 history-image" style="background-image:url({{blog.image.url}})">
+                        <div class="history-title">
+                            <h2 class="title">{{blog.by}}</h2>
+                            <p>{{blog.date}}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-7 history-desc">
+                        <div class="h5 title">{{blog.heading}}</div>
+                        <div class="title">{{blog.product_category}}</div>
+                        <br>
+                        {{blog.description|safe}}
+                        <p>
+                            
+                            <div class="blog-icon">
+                                <ul>
+                                    {% for product in blog.in_products.all %}
+                                        <li>
+                                            <a href="{% url 'productsdetail' subCategorySlug=product.slugUrl %}">
+                                                <img src="{{product.product_image.url}}" style="width: 50px;" alt="">
+                                            </a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </p>
+
+                    </div>
+                </div>
+                {% endfor %}
+                
+
+            </div>
+        </section>
+
+{% endblock %}

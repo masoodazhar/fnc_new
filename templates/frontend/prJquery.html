@@ -1,0 +1,41 @@
+{% for product in products %}
+<div class="col-md-6 col-xs-6">
+    <article>
+        <div class="info">
+            <span class="add-favorite">
+                <a href="javascript:void(0);" data-title="Add to favorites" data-title-added="Added to favorites list"><i class="icon icon-heart"></i></a>
+            </span>
+            <span>
+                <a href="#pro{{product.details.pk}}" class="mfp-open" data-title="Quick wiew"><i class="icon icon-eye"></i></a>
+            </span>
+        </div>
+        <a href="{% url 'productsdetail' subCategorySlug=product.details.slugUrl %}" class="">
+            <div class="btn btn-add">
+                <i class="icon icon-cart"></i>
+            </div>
+        </a>
+        <div class="figure-grid">
+            {% if product.details.get_discounted_percent > 0 %}
+                <span class="label label-info">{{product.details.get_discounted_percent}}%</span>
+            {% endif %}
+            <div class="image">
+                <a href="{% url 'productsdetail' subCategorySlug=product.details.slugUrl %}" class="">
+                    <img src="{{product.details.product_image.url}}" alt="" width="360" />
+                </a>
+            </div>
+            <div class="text">
+                <h2 class="title h4"><a href="{% url 'productsdetail' subCategorySlug=product.details.slugUrl %}">{{product.details.name}}</a></h2>
+                
+                {% if product.details.has_discount %}
+                    <sub>£ {{product.details.get_original_price}}</sub>
+                    <sup>£ {{product.details.get_discounted_price}}</sup>
+                {% else %}
+                    <sup>£ {{product.details.get_original_price}}</sup>
+                {% endif %}                                          
+                
+                <span class="description clearfix">Gubergren amet dolor ea diam takimata consetetur facilisis blandit et aliquyam lorem ea duo labore diam sit et consetetur nulla</span>
+            </div>
+        </div>
+    </article>
+</div>
+{% endfor %}

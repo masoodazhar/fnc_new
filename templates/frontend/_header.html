@@ -1,0 +1,228 @@
+{% load static %}
+{% load cart_template_tags %}
+<nav class="navbar-fixed">
+
+    <div class="container-fluid">
+
+        <!-- ==========  Top navigation ========== -->
+
+        <div class="navigation navigation-top clearfix">
+            <ul>
+                <!--add active class for current page-->
+
+                <li><a href="{{sitesetting.facebook}}" target="_blank"><i class="fa fa-facebook"></i></a></li>
+                <li><a href="{{sitesetting.twitter}}" target="_blank"><i class="fa fa-twitter"></i></a></li>
+                <li><a href="{{sitesetting.linkedin}}" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+                <li><a href="{{sitesetting.instagram}}" target="_blank"><i class="fa fa-instagram"></i></a></li>
+                <li><a href="{{sitesetting.pinterest}}" target="_blank"><i class="fa fa-pinterest"></i></a></li>
+                <!--Language selector-->               
+                <li><a href="javascript:void(0);" class="open-login" style="border-left: 1px solid rgba(255, 255, 255, .2);"><i class="fa fa-truck"></i></a></li>
+                <li>
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'myOrders' %}" style="border-left: 1px solid rgba(255, 255, 255, .2);">
+
+                    {% else %}
+
+                        <a href="{% url 'customerLogin' %}" style="border-left: 1px solid rgba(255, 255, 255, .2);">
+                    {% endif %}
+
+                    <i class="icon icon-user"></i></a>
+                </li>
+                
+                <li><a href="javascript:void(0);" class="open-search"><i class="icon icon-magnifier"></i></a></li>
+                <li><a href="javascript:void(0);" class="open-cart"><i class="icon icon-cart"></i> <span>{{ request.user|cart_item_count }}</span></a></li>
+            </ul>
+        </div> <!--/navigation-top-->
+
+        <!-- ==========  Main navigation ========== -->
+
+        <div class="navigation navigation-main">
+
+            <!-- Setup your logo here-->
+
+            <a href="{% url 'index' %}" class="logo"><img src="{{sitesetting.logo.url}}" alt=""></a>
+
+            <!-- Mobile toggle menu -->
+
+            <a href="#" class="open-menu"><i class="icon icon-menu"></i></a>
+
+            <!-- Convertible menu (mobile/desktop)-->
+
+            <div class="floating-menu">
+
+                <!-- Mobile toggle menu trigger-->
+
+                <div class="close-menu-wrapper">
+                    <span class="close-menu"><i class="icon icon-cross"></i></span>
+                </div>
+
+                <ul>
+
+                    <li><a href="{% url 'index' %}">Home</a></li>
+                    <li><a href="{% url 'blog' %}">Blog</a></li>
+
+                    {% for parentMenu, childMenus in allMenus.items %}
+                    <li>
+                        <a href="#">{{parentMenu}} <span class="open-dropdown"><i class="fa fa-angle-down"></i></span></a>
+                        <div class="navbar-dropdown navbar-dropdown-single">
+                            <div class="navbar-box">                                
+
+                                <div class="box-2">
+                                    <div class="box clearfix">
+                                        <ul>
+                                            {% for menue in childMenus %}
+                                                <li><a href="{% url 'products' subCateSlug=menue.sub_menu_slug %}">{{menue}}</a></li>
+                                            {% endfor %}
+                                        </ul>                                       
+                                    </div> 
+                                </div> 
+
+                            </div> 
+                        </div> 
+                    </li>
+                    {% endfor %}
+
+                    <li><a href="{% url 'contact' %}">Contact</a></li>
+                </ul>
+            </div> <!--/floating-menu-->
+        </div> <!--/navigation-main-->
+
+        <!-- ==========  Search wrapper ========== -->
+
+        <div class="search-wrapper">
+
+            <!-- Search form -->
+            <input class="form-control productsItem" placeholder="Search...">
+            <!-- <button class="btn btn-main btn-search">Go!</button> -->
+
+            <!-- Search results - live search -->
+            <div class="search-results">
+                <div class="search-result-items">
+                    <!-- <div class="title h4">Products <a href="#" class="btn btn-clean-dark btn-xs">View all</a></div> -->
+                    <ul class="setSearchedPrducts">
+                       
+                    </ul>
+                </div> 
+            </div> <!--/search-results-->
+        </div>
+
+        <!-- ==========  Login wrapper ========== -->
+
+        <div class="login-wrapper">
+            <form method="get" action="{% url 'trackProduct' %}">
+                <div class="h4">Enter Your Tracking ID</div>
+                <div class="form-group">
+                    <input type="text" class="form-control" name="trackingId" id="exampleInputEmail1" placeholder="Past Or Enter Tracking ID">
+                </div>
+                
+                <button type="submit" class="btn btn-block btn-main">Submit</button>
+            </form>
+        </div>
+
+        <!-- ==========  Cart wrapper ========== -->
+
+        <div class="cart-wrapper">
+            <div class="checkout">
+                <div class="clearfix">
+
+                    <!--cart item-->
+
+                    <div class="row">
+
+                        <!--cart item-->
+                        {% for order in OrderObject.items.all %}
+                        <div class="cart-block cart-block-item clearfix">
+                            <div class="image">
+                                <a href="{% url 'productsdetail' subCategorySlug=order.item.slugUrl %}"><img src="{{ order.item.product_image.url }}" alt=""></a>
+                            </div>
+                            <div class="title">
+                                <div><a href="{% url 'productsdetail' subCategorySlug=order.item.slugUrl %}">{{order.item.name}}</a></div>
+                                <small>{{order.item.category}} / {{order.item.sub_category}}</small>
+                            </div>
+                            <div class="quantity">
+                                <span><strong>QTY ({{ order.quantity }})</strong></span>
+                            </div>
+                            <div class="price">
+                                {% if order.item.has_discount %} 
+                                    <span class="final">£{{order.item.get_discounted_price}}</span>
+                                    <span class="discount">£{{order.item.get_original_price}}</span>
+                                {% else %}
+                                    <span class="final">£{{order.item.get_discounted_price}}</span>
+                                {% endif %}
+                                
+                            </div>
+                           
+                            <span class="icon icon-cross icon-delete"></span>
+                        </div>
+                        <!-- <div class="cart-block cart-block-item clearfix">
+                            <div class="image">
+                                <a href="{% url 'productsdetail' subCategorySlug=order.item.slugUrl %}"><img src="{{ order.item.product_image.url }}" alt=""></a>
+                            </div>
+                            <div class="title">
+                                <div><a href="{% url 'productsdetail' subCategorySlug=order.item.slugUrl %}">{{order.item.name}}</a></div>
+                                <small>{{order.item.category}} / {{order.item.sub_category}}</small>
+                            </div>
+                            <div class="price">
+                                {% if order.item.has_discount %} 
+                                    <span class="final">£{{order.item.get_discounted_price}}</span>
+                                    <span class="discount">£ {{order.item.get_original_price}}</span>
+                                {% else %}
+                                    <span class="final">£{{order.item.get_discounted_price}}</span>
+                                {% endif %}
+                                
+                            </div>
+                            
+                            <a href="{% url 'remove-from-cart' pk=order.item.pk %}">
+                                <span class="icon icon-cross icon-delete"></span>
+                            </a>
+                        </div> -->
+                        {% empty %}
+                        
+                           <div class="row">
+                               <div class="col-md-12">
+                                    <h2> Cart item is 0</h2>
+                               </div>
+                           </div>
+                        {% endfor %}
+
+                        <!--cart item-->
+
+                        
+                    </div>
+
+                    <hr>
+                    <!--cart final price -->
+                    {% if request.user|cart_item_count > 0 %}
+                        <div class="clearfix">
+                            <div class="cart-block cart-block-footer clearfix">
+                                <div>
+                                    <strong>Total</strong>
+                                </div>
+                                <div>
+                                    <div class="h4 title">£ {{ OrderObject.get_total_price }}</div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+
+
+                    <!--cart navigation -->
+
+                    <div class="cart-block-buttons clearfix">
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <a href="{% url 'index' %}" class="btn btn-clean-dark">Continue shopping</a>
+                            </div>
+                            {% if request.user|cart_item_count > 0 %}
+                            <div class="col-xs-6 text-right">
+                                <a href="{% url 'checkout' %}" class="btn btn-main"><span class="icon icon-cart"></span> Checkout</a>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                </div>
+            </div> <!--/checkout-->
+        </div> <!--/cart-wrapper-->
+    </div> <!--/container-->
+</nav>

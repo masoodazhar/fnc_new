@@ -1,0 +1,6 @@
+.instagram .gallery .item {
+    width: 16.66667%;
+    float: left;
+    overflow: hidden;
+    border: solid 1px white;
+}

@@ -1,0 +1,98 @@
+
+{% extends 'backend/master.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block body %}
+
+
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2><i class="fa fa-bars"></i> Tabs <small>Float left</small></h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i
+                                class="fa fa-wrench"></i></a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="#">Settings 1</a>
+                            <a class="dropdown-item" href="#">Settings 2</a>
+                        </div>
+                    </li>
+                    <li><a class="close-link"><i class="fa fa-close"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade active show" id="home" role="tabpanel" aria-labelledby="home-tab">
+                        <h3>Product Details</h3>
+                        
+                        <table class="table table-bordered table-striped table-hover">
+                            <tbody>
+                                <tr>
+                                    <td colspan="4"> <strong> Product Detail </strong> </td>
+                                </tr>
+                                <tr>
+                                    <td scope="row" style="font-weight: bold;">Category</td>
+                                    <td>{{ProductsList.category}}</td>
+                                    <td scope="row" style="font-weight: bold;">Sub Category</td>
+                                    <td>{{ProductsList.sub_category}}</td>
+                                </tr>
+                                <tr>
+                                    <td scope="row" style="font-weight: bold;">Name</td>
+                                    <td>{{ProductsList}}</td>
+                                    <td scope="row" style="font-weight: bold;">Price</td>
+                                    <td>{{ProductsList.price}}</td>
+                                </tr>
+                                <tr>
+                                    <td scope="row" style="font-weight: bold;">Size</td>
+                                    <td>{{ProductsList.size}}</td>
+                                    <td scope="row" style="font-weight: bold;">SKU</td>
+                                    <td>{{ProductsList.sku}}</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4"> <strong> Feature Detail </strong> </td>
+                                </tr>
+                                <tr>
+                                    <td scope="row" style="font-weight: bold;">Display in navbar</td>
+                                    <td>{{ProductsList.display_in_navbar}}</td>
+                                    <td scope="row" style="font-weight: bold;">Has Discount</td>
+                                    <td>{{ProductsList.has_discount}}</td>
+                                </tr>
+                                <tr>
+                                    <td scope="row" style="font-weight: bold;">Display in main Product</td>
+                                    <td>{{ProductsList.display_in_home}}</td>
+                                    <td scope="row" style="font-weight: bold;">Discunted Price</td>
+                                    <td>{{ProductsList.discoun_price}}</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4"> <strong> {{ProductsList.description|safe}} </strong> </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4"> <strong> Product Media </strong> </td>
+                                </tr>
+                                <tr>
+                                    {% for image in images %}
+                                    <td><img src="{{image.image.url}}" style="width:200px; height: 150px;" alt=""></td>
+                                    {% if forloop.counter|divisibleby:4 and forloop.counter > 1 %}
+                                    </tr>
+                                   
+                                    {% endif %}
+                                    {% endfor %}
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                  
+                </div>
+               
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

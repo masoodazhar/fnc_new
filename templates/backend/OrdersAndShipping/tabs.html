@@ -1,0 +1,19 @@
+<ul class="nav nav-tabs bar_tabs" id="myTab" role="tablist">
+    <li class="nav-item">
+        <a class="nav-link {% if UsersOrders %} active {% endif %}"  href="{% url 'UsersOrders' %}" role="tab"
+            aria-controls="profile" aria-selected="false">New Order Requests </a>
+
+        
+    </li>
+   <li class="nav-item">
+        <a class="nav-link {% if processedOrders %} active {% endif %}"  href="{% url 'processedOrders' %}" role="tab"
+                aria-controls="profile" aria-selected="false">Processed Orders</a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link {% if deliveredOrders %} active {% endif %}"  href="{% url 'deliveredOrders' %}" role="tab"
+                aria-controls="profile" aria-selected="false">Delivered Orders</a>
+    </li>
+   
+
+</ul>

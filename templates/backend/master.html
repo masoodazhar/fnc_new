@@ -1,0 +1,404 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Mirrored from colorlib.com/polygon/gentelella/ by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 20 Mar 2021 00:47:50 GMT -->
+<!-- Added by HTTrack -->
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="images/favicon.ico" type="image/ico" />
+    <title>NFC | Dashboard</title>
+    <link href="{% static 'dashboard/vendors/switchery/dist/switchery.min.css' %}" rel="stylesheet">
+    <link href="{% static 'dashboard/vendors/bootstrap/dist/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- <link href="{% static 'dashboard/vendors/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet"> -->
+
+    <link href="{% static 'dashboard/vendors/nprogress/nprogress.css' %}" rel="stylesheet">
+
+    <link href="{% static 'dashboard/vendors/iCheck/skins/flat/green.css' %}" rel="stylesheet">
+
+    <link href="{% static 'dashboard/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css' %}" rel="stylesheet">
+
+    <link href="{% static 'dashboard/vendors/jqvmap/dist/jqvmap.min.css' %}" rel="stylesheet" />
+
+    <link href="{% static 'dashboard/vendors/bootstrap-daterangepicker/daterangepicker.css' %}" rel="stylesheet">
+
+    <link href="{% static 'dashboard/build/css/custom.min.css' %}" rel="stylesheet">
+    <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"> -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link href="{% static 'dashboard/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'dashboard/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'dashboard/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'dashboard/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'dashboard/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css' %}" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    {% block css %}
+    {% endblock %}
+</head>
+
+<body class="nav-md">
+    <div class="container body">
+        <div class="main_container">
+            <div class="col-md-3 left_col">
+                <div class="left_col scroll-view">
+                    <div class="navbar nav_title" style="border: 0;">
+                        <a href="{% url 'contentmanagement' %}" class="site_title"><i class="fa fa-paw"></i> <span>NFC Dashboard</span></a>
+                    </div>
+                    <div class="clearfix"></div>
+
+                    <div class="profile clearfix">
+                        <div class="profile_pic">
+                            <img src="{% static 'dashboard/images/img.jpg' %}" alt="..." class="img-circle profile_img">
+                        </div>
+                        <div class="profile_info">
+                            <span>Welcome,</span>
+                            <h2>{{user.username}}</h2>
+                        </div>
+                    </div>
+
+                    <br />
+
+                    <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+                        <div class="menu_section">
+                            <h3>General</h3>
+                            <ul class="nav side-menu">
+                                
+                                <li><a href="{% url 'CreateProductOption' %}"><i class="fa fa-bar-chart "></i> Product Options </a> </li> 
+
+                                <li><a><i class="fa fa-home"></i> Content Management <span
+                                    class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="{% url 'contentmanagement'  %}">Main Dashboard</a></li>
+                                        <li><a href="{% url 'CreateSeasionSale'  %}">Home Top Products</a></li>
+                                        <li><a href="{% url 'CreateNavigationMenu' %}">Category</a></li>
+                                        <li><a href="{% url 'CreateNavigationSubMenu' %}">Sub Category</a></li>
+                                        <li><a href="{% url 'CreateSliders' %}">Sliders</a></li>
+                                        <li><a href="{% url 'CreateProducts' %}">Products</a></li>
+                                        <li><a href="{% url 'CreateAbout' %}">About</a></li>
+                                        <li><a href="{% url 'CreateBlog' %}">Blog</a></li>
+                                    </ul>
+                                </li> 
+
+                                <li><a><i class="fa fa-credit-card"></i> Order & Shipping <span
+                                    class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="{% url 'UsersOrders' %}">New Order Requests</a></li>
+                                        <li><a href="{% url 'processedOrders' %}">Processed Orders</a></li>
+                                        <li><a href="{% url 'deliveredOrders' %}">Delivered Orders</a></li>
+                                        
+                                    </ul>
+                                </li> 
+                                <li><a href="{% url 'CreateInstagram' %}"><i class="fa fa-instagram "></i> Instagram Images </a> </li> 
+                                <li><a href="{% url 'CreateRatings' %}"><i class="fa fa-star "></i> Manage Ratings </a> </li> 
+                                <li><a href="{% url 'allUsers' %}"><i class="fa fa-users "></i> All Users </a> </li> 
+                               
+                           
+                                
+                               <!-- <li><a><i class="fa fa-desktop"></i> Settings <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="#">Content Setting</a></li>
+                                        <li><a href="#">Navigations Setting</a></li>
+                                        <li><a href="#">Product Features Setting</a></li>
+                                    </ul>
+                                </li> -->
+                                <!-- <li><a><i class="fa fa-edit"></i> Address Services <span
+                                            class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="general_elements.html">Annual Renewals</a></li>
+                                        <li><a href="general_elements.html">Registered Office Address</a></li>
+                                        <li><a href="general_elements.html">Service Address</a></li>
+                                        <li><a href="general_elements.html">Business Address Service</a></li>
+                                        <li><a href="general_elements.html">Company Addresses Explained</a></li>
+                                    </ul>
+                                </li>
+                                <li><a><i class="fa fa-bar-chart-o"></i> Company Services <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="tables.html">Overview</a></li>
+                                        <li><a href="tables.html">Confirmation Statement</a></li>
+                                        <li><a href="tables.html">Dormant Company Accounts</a></li>
+                                        <li><a href="tables.html">Company Dissolution</a></li>
+                                        <li><a href="tables.html">Company Name Change</a></li>
+                                        <li><a href="tables.html">Director Appointment & Resignation</a></li>
+                                        <li><a href="tables.html">Full Company Secretary Service</a></li>
+                                        <li><a href="tables.html">Issue of Shares</a></li>
+                                        <li><a href="tables.html">Transfer of Shares</a></li>
+                                        <li><a href="tables.html">Certificate of Good Standing</a></li>
+                                        <li><a href="tables.html">Apostilled Documents</a></li>
+                                        <li><a href="tables.html">Business Telephone Services</a></li>
+                                        <li><a href="tables.html">VAT Registration</a></li>
+                                        <li><a href="tables.html">Barclays Bank Account</a></li>
+                                        <li><a href="tables.html">Cashplus Bank Account</a></li>
+                                        <li><a href="tables.html">Countingup Bank Account</a></li>
+                                        <li><a href="tables.html">Anna Bank Account</a></li>
+                                        <li><a href="tables.html">Renewals</a></li>
+                                    </ul>
+                                </li>
+                                <li><a><i class="fa fa-question-circle"></i> Help & Advice <span
+                                            class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="chartjs.html">Our Online Company Manager</a></li>
+                                        <li><a href="chartjs.html">Our 4 Step Guide to Forming a Company</a></li>
+                                        <li><a href="chartjs.html">Information Required to Set Up a Company</a></li>
+                                        <li><a href="chartjs.html">Introduction to Company Formation</a></li>
+                                        <li><a href="chartjs.html">Starting Your Own Business - The Ultimate Guide</a></li>
+                                        <li><a href="chartjs.html">Post Incorporation Support</a></li>
+                                        <li><a href="chartjs.html">Companies Limited by Shares</a></li>
+                                        <li><a href="chartjs.html">Companies Limited by Guarantee</a></li>
+                                        <li><a href="chartjs.html">Limited Liability Partnerships</a></li>
+                                        <li><a href="chartjs.html">Directors and Secretaries</a></li>
+                                        <li><a href="chartjs.html">Shares and Shareholders</a></li>
+                                        <li><a href="chartjs.html">Annual Filing Requirements</a></li>
+                                    </ul>
+                                </li> -->
+                                
+                            </ul>
+                        </div>
+                    
+                    </div>
+
+
+                    <div class="sidebar-footer hidden-small">
+                        <a data-toggle="tooltip" data-placement="top" title="Settings">
+                            <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                        </a>
+                        <a data-toggle="tooltip" data-placement="top" title="FullScreen">
+                            <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
+                        </a>
+                        <a data-toggle="tooltip" data-placement="top" title="Lock">
+                            <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
+                        </a>
+                        <a data-toggle="tooltip" data-placement="top" title="Logout" href="#l">
+                            <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="top_nav">
+                <div class="nav_menu">
+                    <div class="nav toggle">
+                        <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+                    </div>
+                    <nav class="nav navbar-nav">
+                        <ul class=" navbar-right">
+                            <li class="nav-item dropdown open" style="padding-left: 15px;">
+                                <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true"
+                                    id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
+                                    <img src="{% static 'dashboard/images/img.jpg' %}" alt="">Admin
+                                </a>
+                                <div class="dropdown-menu dropdown-usermenu pull-right"
+                                    aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="javascript:;"> Profile </a>
+                                    <a class="dropdown-item" href="javascript:;">
+                                        <span class="badge bg-red pull-right">50%</span>
+                                        <span>Settings</span>
+                                    </a>
+                                    <a class="dropdown-item" href="javascript:;">Help</a>
+                                    <a class="dropdown-item" href="{% url 'logout' %}"><i class="fa fa-sign-out pull-right"></i>
+                                        Log Out</a>
+                                </div>
+                            </li>
+                            <li role="presentation" class="nav-item dropdown open">
+                                <a href="javascript:;" class="dropdown-toggle info-number" id="navbarDropdown1"
+                                    data-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa fa-envelope-o"></i>
+                                    <span class="badge bg-green">0</span>
+                                </a>
+                                <ul class="dropdown-menu list-unstyled msg_list" role="menu"
+                                    aria-labelledby="navbarDropdown1">
+                                    <!-- <li class="nav-item">
+                                        <a class="dropdown-item">
+                                            <span class="image"><img src="{% static 'dashboard/images/img.jpg' %}" alt="Profile Image" /></span>
+                                            <span>
+                                                <span>John Smith</span>
+                                                <span class="time">3 mins ago</span>
+                                            </span>
+                                            <span class="message">
+                                                Film festivals used to be do-or-die moments for movie makers. They were
+                                                where...
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="dropdown-item">
+                                            <span class="image"><img src="{% static 'dashboard/images/img.jpg' %}" alt="Profile Image" /></span>
+                                            <span>
+                                                <span>John Smith</span>
+                                                <span class="time">3 mins ago</span>
+                                            </span>
+                                            <span class="message">
+                                                Film festivals used to be do-or-die moments for movie makers. They were
+                                                where...
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="dropdown-item">
+                                            <span class="image"><img src="{% static 'dashboard/images/img.jpg' %}" alt="Profile Image" /></span>
+                                            <span>
+                                                <span>John Smith</span>
+                                                <span class="time">3 mins ago</span>
+                                            </span>
+                                            <span class="message">
+                                                Film festivals used to be do-or-die moments for movie makers. They were
+                                                where...
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="dropdown-item">
+                                            <span class="image"><img src="{% static 'dashboard/images/img.jpg' %}" alt="Profile Image" /></span>
+                                            <span>
+                                                <span>John Smith</span>
+                                                <span class="time">3 mins ago</span>
+                                            </span>
+                                            <span class="message">
+                                                Film festivals used to be do-or-die moments for movie makers. They were
+                                                where...
+                                            </span>
+                                        </a>
+                                    </li> -->
+                                    <li class="nav-item">
+                                        <div class="text-center">
+                                            <a class="dropdown-item">
+                                                <strong>See All Alerts</strong>
+                                                <i class="fa fa-angle-right"></i>
+                                            </a>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            <div class="right_col" role="main">
+
+            <div class="row">
+                <div class="animated flipInY col-lg-3 col-md-3 col-sm-6  ">
+                    <div class="tile-stats">
+                        <div class="icon"><i class="fa fa-caret-square-o-right"></i>
+                        </div>
+                        <div class="count">{{newUsers}}</div>
+                        <h3>New Sign ups</h3>
+                        <p><a href="{% url 'allUsers' %}">View all records</a></p>
+                    </div>
+                </div>
+                <div class="animated flipInY col-lg-3 col-md-3 col-sm-6  ">
+                    <div class="tile-stats">
+                        <div class="icon"><i class="fa fa-comments-o"></i>
+                        </div>
+                        <div class="count">{{requestedOrders}}</div>
+                        <h3>Order Requests</h3>
+                        <p><a href="{% url 'UsersOrders' %}">View all records</a></p>
+                    </div>
+                </div>
+                <div class="animated flipInY col-lg-3 col-md-3 col-sm-6  ">
+                    <div class="tile-stats">
+                        <div class="icon"><i class="fa fa-sort-amount-desc"></i>
+                        </div>
+                        <div class="count">{{newOrders}}</div>
+                        <h3>New Orders</h3>
+                        <p><a href="{% url 'processedOrders' %}">View all records</a></p>
+                    </div>
+                </div>
+                <div class="animated flipInY col-lg-3 col-md-3 col-sm-6  ">
+                    <div class="tile-stats">
+                        <div class="icon"><i class="fa fa-check-square-o"></i>
+                        </div>
+                        <div class="count">{{completedOrders}}</div>
+                        <h3>Completed Orders</h3>
+                        <p><a href="{% url 'deliveredOrders' %}">View all records</a></p>
+                    </div>
+                </div>
+            </div>
+
+            {% block body %}{% endblock %}
+
+            </div>
+            <footer>
+                <div class="pull-right">
+                    MakeMyUKCo Developed by<a href="http://www.intelexcel.com" target="_blank" > Intelexcel</a>
+                </div>
+                <div class="clearfix"></div>
+            </footer>
+
+        </div>
+    </div>
+
+    <script src="{% static 'dashboard/vendors/jquery/dist/jquery.min.js' %}"></script>
+
+    <script src="{% static 'dashboard/vendors/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
+
+    <script src="{% static 'dashboard/vendors/fastclick/lib/fastclick.js' %}"></script>
+
+    <script src="{% static 'dashboard/vendors/nprogress/nprogress.js' %}"></script>
+
+    <script src="{% static 'dashboard/vendors/Chart.js/dist/Chart.min.js' %}"></script>
+
+    <script src="{% static 'dashboard/vendors/gauge.js/dist/gauge.min.js' %}"></script>
+
+    <script src="{% static 'dashboard/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js' %}"></script>
+
+    <script src="{% static 'dashboard/vendors/iCheck/icheck.min.js' %}"></script>
+
+    <script src="{% static 'dashboard/vendors/skycons/skycons.js' %}"></script>
+
+    <script src="{% static 'dashboard/vendors/Flot/jquery.flot.js' %}"></script>
+    <script src="{% static 'dashboard/vendors/Flot/jquery.flot.pie.js' %}"></script>
+    <script src="{% static 'dashboard/vendors/Flot/jquery.flot.time.js' %}"></script>
+    <script src="{% static 'dashboard/vendors/Flot/jquery.flot.stack.js' %}"></script>
+    <script src="{% static 'dashboard/vendors/Flot/jquery.flot.resize.js' %}"></script>
+
+    <script src="{% static 'dashboard/vendors/flot.orderbars/js/jquery.flot.orderBars.js' %}"></script>
+    <script src="{% static 'dashboard/vendors/flot-spline/js/jquery.flot.spline.min.js' %}"></script>
+    <script src="{% static 'dashboard/vendors/flot.curvedlines/curvedLines.js' %}"></script>
+
+    <script src="{% static 'dashboard/vendors/DateJS/build/date.js' %}"></script>
+
+    <script src="{% static 'dashboard/vendors/jqvmap/dist/jquery.vmap.js' %}"></script>
+    <script src="{% static 'dashboard/vendors/jqvmap/dist/maps/jquery.vmap.world.js' %}"></script>
+    <script src="{% static 'dashboard/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js' %}"></script>
+
+    <script src="{% static 'dashboard/vendors/moment/min/moment.min.js' %}"></script>
+    <script src="{% static 'dashboard/vendors/bootstrap-daterangepicker/daterangepicker.js' %}"></script>
+
+    <script src="{% static 'dashboard/vendors/datatables.net/js/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'dashboard/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js' %}"></script>
+    <script src="{% static 'dashboard/vendors/datatables.net-buttons/js/dataTables.buttons.min.js' %}"></script>
+    <script src="{% static 'dashboard/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js' %}"></script>
+    <script src="{% static 'dashboard/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js' %}"></script>
+    <script src="{% static 'dashboard/vendors/datatables.net-responsive/js/dataTables.responsive.min.js' %}"></script>
+    <script src="{% static 'dashboard/vendors/datatables.net-scroller/js/dataTables.scroller.min.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+    <script src="{% static 'dashboard/vendors/switchery/dist/switchery.min.js' %}"></script>
+    <script src="{% static 'dashboard/build/js/custom.min.js' %}"></script>
+
+    
+    <script>
+        $(document).ready(function() {    
+            $('textarea').summernote();
+            $('select').not('#iconSelectbox').select2({
+                width: 'resolve',
+                theme: 'classic',
+            });
+
+            $('table').DataTable()
+        });
+    </script>
+    {% block js %}
+
+    {% endblock %}
+</body>
+
+
+</html>

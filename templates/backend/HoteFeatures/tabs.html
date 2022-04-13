@@ -1,0 +1,23 @@
+<ul class="nav nav-tabs bar_tabs" id="myTab" role="tablist">
+    
+    <li class="nav-item">
+        <a class="nav-link {% if HoteFeatures %} active {% endif %}"  href="{% url 'HoteFeatures' %}" role="tab"
+            aria-controls="profile" aria-selected="false">Main</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link {% if tabsmenu %} active {% endif %}"  href="{% url 'CreateCategory' %}" role="tab"
+            aria-controls="profile" aria-selected="false">Category</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link {% if tabsubmenu %} active {% endif %}"  href="{% url 'CreateSubCategory' %}" role="tab"
+            aria-controls="profile" aria-selected="false">Sub Category</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link {% if tabproducts %} active {% endif %}"  href="{% url 'CreateHoteProducts' %}" role="tab"
+        aria-controls="step5" aria-selected="true">Products</a>
+    </li>
+    <!-- <li class="nav-item">
+        <a class="nav-link {% if tabslider %} active {% endif %}"  href="{% url 'CreateSliders' %}" role="tab"
+            aria-controls="profile" aria-selected="false">Sliders</a>
+    </li> -->
+</ul>

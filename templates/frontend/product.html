@@ -1,0 +1,447 @@
+{% extends 'frontend/master.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load custom_template_tags %}
+{% block body %}
+        <section class="main-header" style="background-image:url({{sitesetting.product_detail_page_head_image.url}})">
+            <header>
+                <div class="container">
+                    <h1 class="h2 title">Sofa Laura</h1>
+                    <ol class="breadcrumb breadcrumb-inverted">
+                        <li><a href="index-2.html"><span class="icon icon-home"></span></a></li>
+                        <li><a href="category.html">Product Category</a></li>
+                        <li><a href="products-grid.html">Product Sub-category</a></li>
+                        <li><a class="active" href="product.html">Product overview</a></li>
+                    </ol>
+                </div>
+            </header>
+        </section>
+
+        <!-- ========================  Product ======================== -->
+        <section class="product">
+            <div class="main">
+                <div class="container">
+                    {% for message in messages %}
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="alert alert-success">
+                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                    <strong>Success!</strong> {{message.message}},  <a href="{% url 'view-cart' %}"><i class="icon icon-cart"></i> View Cart</a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    <div class="row product-flex">
+
+                        <!-- product flex is used only for mobile order -->
+                        <!-- on mobile 'product-flex-info' goes bellow gallery 'product-flex-gallery' -->
+
+                        <div class="col-md-4 col-sm-12 product-flex-info">
+                            <div class="clearfix">
+
+                                <!-- === product-title === -->
+
+                                <h1 class="title" data-title="">{{singleProduct.name}} <small>{{singleProduct.sub_category}}</small></h1>
+
+                                <div class="clearfix">
+
+                                    <!-- === price wrapper === -->
+
+                                    <div class="price">
+                                        {% if singleProduct.has_discount %}
+                                            <span class="h3">£{{singleProduct.get_discounted_price}} <small>£{{singleProduct.get_original_price}}</small></span>
+                                        {% else %}
+                                        <span class="h3">£{{singleProduct.get_original_price}}</span>
+                                            
+                                            
+                                        {% endif %}
+                                    </div>
+                                    <hr />
+
+                                    <!-- === info-box === -->
+
+                                    <div class="info-box">
+                                        <span><strong>Maifacturer</strong></span>
+                                        <span>{{singleProduct.sub_category}}</span>
+                                    </div>
+
+                                    <!-- === info-box === -->
+                                    <!-- <div class="info-box">
+                                        <span><strong>Materials</strong></span>
+                                        <span>Wood, Leather, Acrylic</span>
+                                    </div> -->
+                                    <!-- === info-box === -->
+
+                                    <div class="info-box">
+                                        <span><strong>Availability</strong></span>
+                                        <span><i class="fa fa-check-square-o"></i> In stock</span>
+                                        <span class="hidden"><i class="fa fa-truck"></i> Out of stock</span>
+                                    </div>
+
+                                    <hr />
+
+                                    <div class="info-box info-box-addto">
+                                        <span><strong>Wishlist</strong></span>
+                                        <span>
+                                            <i class="add"><i class="fa fa-eye-slash"></i> Add to Watch list</i>
+                                            <i class="added"><i class="fa fa-eye"></i> Remove from Watch list</i>
+                                        </span>
+                                    </div>
+
+                                    <hr />
+                                   <form id="addTocartForm" action="{{singleProduct.get_add_to_cart_url}}" method="post">
+
+                                        <!-- === info-box === -->
+                                        {% for otherOptions in other_oprions %}
+
+                                            {% if otherOptions.type == 'color' %}
+                                                <div class="info-box">
+                                                    <span><strong>{{otherOptions.name}}</strong></span>
+                                                    
+                                                    <div class="product-colors clearfix">
+                                                        {% for option in otherOptions.options|stringToArray %}      
+                                                            <span class="color-btn" style="background-color:{{option}}" {% if forloop.counter == 1 %} checked="checked" {% endif %}></span>
+                                                            <input type="radio" name="{{otherOptions.name|makeName}}" value="{{option}}">
+                                                        {% endfor %}
+                                                    </div>
+                                                </div>
+                                            {% else %}
+                                                <div class="info-box">
+                                                    <span><strong>{{otherOptions.name}}</strong></span>
+                                                    
+                                                    <div class="product-colors clearfix">
+                                                        {% for option in otherOptions.options|stringToArray %}      
+                                                            <span class="color-btn-custom color-btn-biege">{{option}}</span>
+                                                            <input type="radio" name="{{otherOptions.name|makeName}}" value="{{option}}">
+                                                        {% endfor %}                                                    
+                                                    </div>
+                                                </div>
+                                            {% endif %}
+                                        
+                                        {% endfor %}
+                                        <hr>
+                                        <!-- <div class="info-box">
+                                                <button type="submit" class="btn btn-buy-custom" data-text="Buy">
+                                                    <i class="icon icon-cart"></i>
+                                                </button>
+
+                                                
+                                    
+                                        </div> -->
+                                    </form>
+                                </div>
+                            </div>
+                        </div> 
+                        
+                       
+
+                        <div class="col-md-8 col-sm-12 product-flex-gallery">
+                            <button type="submit" class="btn btn-buy" data-text="Buy" id="btnaddTocart"></button>
+
+                            <div class="owl-product-gallery open-popup-gallery">
+                                <a href="{{singleProduct.product_image.url}}"><img src="{{singleProduct.product_image.url}}" alt="" height="500" /></a>
+                                {% for image in productImages %}
+                                    <a href="{{image.image.url}}"><img src="{{image.image.url}}" alt="" height="500" /></a>
+                                {% endfor %}
+                            </div>
+                        </div>
+
+                    </div>
+                   
+
+                </div>
+            </div>
+
+            <!-- === product-info === -->
+
+            <div class="info">
+                <div class="container">
+                    <div class="row">
+
+                        <!-- === product-designer === -->
+
+                        <div class="col-md-12">
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active">
+                                    <a href="#designer" aria-controls="designer" role="tab" data-toggle="tab">
+                                        <i class="icon icon-user"></i>
+                                        <span>Collection</span>
+                                    </a>
+                                </li>
+                                <li role="presentation">
+                                    <a href="#design" aria-controls="design" role="tab" data-toggle="tab">
+                                        <i class="icon icon-sort-alpha-asc"></i>
+                                        <span>Specification</span>
+                                    </a>
+                                </li>
+                                <li role="presentation">
+                                    <a href="#rating" aria-controls="rating" role="tab" data-toggle="tab">
+                                        <i class="icon icon-thumbs-up"></i>
+                                        <span>Rating</span>
+                                    </a>
+                                </li>
+                            </ul>
+
+                            <!-- === tab-panes === -->
+
+                            <div class="tab-content">
+
+                                <div role="tabpanel" class="tab-pane active" id="designer">
+                                    <div class="content">
+
+                                        <!-- === designer collection title === -->
+
+                                        <h3>Designers collection</h3>
+
+                                        <div class="products">
+                                            <div class="row">
+                                                {% for product in page_obj %}
+                                                    <div class="col-md-4 col-xs-4">
+                                                        <article>
+                                                            <div class="info" style="background-color: #ffffff00;">
+                                                                <span class="add-favorite">
+                                                                    <a href="javascript:void(0);" data-title="Add to favorites" data-title-added="Added to favorites list"><i class="icon icon-heart"></i></a>
+                                                                </span>
+                                                                <span>
+                                                                    <a href="#pro{{product.pk}}" class="mfp-open" data-title="Quick wiew"><i class="icon icon-eye"></i></a>
+                                                                </span>
+                                                            </div>
+                                                            <a href="{% url 'productsdetail' subCategorySlug=product.slugUrl %}" class="">
+                                                                <div class="btn btn-add">
+                                                                    <i class="icon icon-cart"></i>
+                                                                </div>
+                                                            </a>
+                                                            <div class="figure-block">
+                                                                {% if product.get_discounted_percent > 0 %}
+                                                                    <span class="label label-info">{{product.get_discounted_percent}}%</span>
+                                                                {% endif %}
+                                                                <div class="image">
+                                                                    <a href="{% url 'productsdetail' subCategorySlug=product.slugUrl %}" class="">
+                                                                        <img src="{{product.product_image.url}}" alt="" width="360" />
+                                                                    </a>
+                                                                </div>
+                                                                <hr>
+                                                                <div class="text">
+                                                                    <h2 class="title h4"><a href="{% url 'productsdetail' subCategorySlug=product.slugUrl %}">{{product.name}}</a></h2>
+                                                                    {% if product.has_discount %}
+                                                                        <sup style="font-size: 20px; font-weight: bold; color: #0bc7f1;">£{{product.get_discounted_price}}</sup>
+                                                                        <br>
+                                                                        <sub>£{{product.get_original_price}}</sub>
+                                                                    {% else %}
+                                                                      <sup style="font-size: 20px; font-weight: bold; color: #0bc7f1;">£{{product.get_original_price}}</sup>
+                                                                      <br>
+                                                                      <sup></sup>
+                                                                    {% endif %}   
+                                                                </div>
+                                                            </div>
+                                                        </article>
+                                                    </div>
+                                                {% endfor %}
+                                            </div> <!--/row-->
+                                        </div> <!--/products-->
+                                        <div class="pagination-wrapper">
+                                            <ul class="pagination">
+                                                <li>
+                                                    {% if page_obj.has_previous %}
+                                                    <a href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                                                        <span aria-hidden="true">&laquo;</span>
+                                                    </a>
+                                                    {% endif %}
+                                                </li>
+                                                
+                                                <li class=""><a href="#" style="border-radius: 5px;">
+                                                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                                                </a></li>
+                                              
+                                                
+                                                
+                                                <li>
+                                                    {% if page_obj.has_next %}
+                                                    <a href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+                                                        <span aria-hidden="true">&raquo;</span>
+                                                    </a>
+                                                    {% endif %}
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div> <!--/content-->
+                                </div> <!--/tab-pane-->
+                                <!-- ============ tab #2 ============ -->
+
+                                <div role="tabpanel" class="tab-pane" id="design">
+                                    <div class="content">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <h3>Dimensions</h3>
+                                                {% for discriptiveImage in productDiscriptiveImages %}
+                                                <p>
+                                                    <img class="full-image" src="{{discriptiveImage.image.url}}" alt="Alternate Text" width="350" />
+                                                </p>
+                                                <hr />
+                                                {% endfor %}
+                                                
+                                            </div>
+                                            <div class="col-md-8">
+                                                <h3>Product Specification</h3>
+                                                   {{singleProduct.description|safe}}
+                                            
+                                            </div>
+
+                                        </div> 
+                                    </div>
+                                </div> 
+                                <!-- ============ tab #3 ============ -->
+
+                                <div role="tabpanel" class="tab-pane" id="rating">
+
+                                    <!-- ============ ratings ============ -->
+
+                                    <div class="content">
+                                        <h3>Rating</h3>
+
+                                        <div class="row">
+
+                                            <!-- === comments === -->
+
+                                            <div class="col-md-12">
+                                                <div class="comments">
+                                                    
+                                                    <br>
+                                                    <div class="comment-wrapper">
+
+                                                       {% for comment in comments %}
+                                                            <div class="comment-block">
+                                                                <div class="comment-user">
+                                                                    <div><img src="{% static 'assets/images/user-2.jpg' %}" alt="Alternate Text" width="70" /></div>
+                                                                    <div>
+                                                                        <h5>
+                                                                            <span>{{comment.name}}</span>
+                                                                            <span class="pull-right">
+                                                                                {{comment.activeStart|safe}}
+                                                                                {{comment.totalStars|safe}}
+                                                                            </span>
+                                                                            <small>{{comment.date}}</small>
+                                                                        </h5>
+                                                                    </div>
+                                                                </div>
+
+                                                                <!-- comment description -->
+
+                                                                <div class="comment-desc">
+                                                                    <p>
+                                                                        {{comment.description|safe}}
+                                                                    </p>
+                                                                </div>
+
+                                                                <!-- comment reply -->
+                                                                {% for reply in comment.replied %}
+                                                                    <div class="comment-block">
+                                                                        <div class="comment-user">
+                                                                            <div><img src="{% static 'assets/images/user-2.jpg' %}" alt="Alternate Text" width="70" /></div>
+                                                                            <div>
+                                                                                <h5>{{reply.name}}<small>{{reply.date}}</small></h5>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="comment-desc">
+                                                                            {{reply.description|safe}}
+                                                                        </div>
+                                                                    </div>
+                                                                {% endfor %}
+                                                                <!--/reply-->
+                                                            </div>
+                                                       {% endfor %}
+
+                                                    </div>
+<!-- 
+                                                    <div class="comment-header">
+                                                        <a href="#" class="btn btn-clean-dark">12 comments</a>
+                                                    </div>  -->
+                                                   
+
+                                                    <div class="comment-add">
+
+                                                        <div class="comment-reply-message">
+                                                            <div class="h3 title">Leave a Reply </div>
+                                                            <p>Your email address will not be published.</p>
+                                                        </div>
+
+                                                        <form action="{% url 'productRatingSave' %}" method="post">
+                                                            {% csrf_token %}
+                                                            {{RatingForm.name|as_crispy_field}}
+                                                            {{RatingForm.stars|as_crispy_field}}
+                                                            {{RatingForm.description|as_crispy_field}}
+                                                            <input type="hidden" name="type" value="0">
+                                                            <input type="hidden" name="answer_of" value="0">
+                                                            <input type="hidden" name="subCategorySlug" value="{{subCategorySlug}}">
+                                                            <input type="hidden" name="product_id" value="{{singleProduct.pk}}">
+                                                            <input type="hidden" name="status" value="1">
+                                                            <div class="clearfix text-center">
+                                                                <button type="submit" class="btn btn-main">Add comment</button>
+                                                            </div>
+                                                        </form>
+
+                                                    </div><!--/comment-add-->
+                                                </div> <!--/comments-->
+                                            </div>
+
+
+                                        </div> <!--/row-->
+                                    </div> <!--/content-->
+                                </div> <!--/tab-pane-->
+                            </div> <!--/tab-content-->
+                        </div>
+                    </div> <!--/row-->
+                </div> <!--/container-->
+            </div> <!--/info-->
+        </section>
+
+        <!-- ========================  Product info popup - quick view ======================== -->
+
+        
+{% endblock %}
+
+{% block js %}
+<script>
+
+    const btnaddTocart = document.getElementById('btnaddTocart');
+    const form = document.getElementById( "addTocartForm" );
+
+    btnaddTocart.addEventListener('click', function(event) {
+        
+    });
+
+    form.addEventListener("submit", function( event ) {
+        event.preventDefault();
+
+        // const radio_buttons = document.querySelector('#addTocartForm input[type="radio"]');
+        const radio_buttons = form.getElementsByTagName("input");
+
+        const inputs = new Map();
+        let counter = 0;
+        for(let tag of radio_buttons){
+            if(tag.checked == true){
+                counter++;
+            }
+            inputs.set(tag.name, tag.ELEMENT_NODE);
+        }
+        console.log("checkd:", counter);
+        const totalLength = Array.from(inputs.keys()).length;
+        
+        if(!atLeastOneRadio(totalLength, counter)){
+            alert(`Please select Required Option(s) are: ${ Array.from(inputs.keys()) }`);
+        }else{
+            event.currentTarget.submit();
+        }
+        
+    });
+    
+    function atLeastOneRadio(length, checkedElem) {
+        return (checkedElem > (length-1));
+    }
+    
+
+
+ 
+
+</script>
+{% endblock %}

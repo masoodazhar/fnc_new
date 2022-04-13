@@ -1,0 +1,565 @@
+{% extends 'frontend/master.html' %}
+{% load static %}
+{% block body %}
+{% block css %}
+<style>
+    .box_shadow1 {
+        box-shadow: 0 0 10px rgb(0 0 0 / 10%);
+    }
+    .blog_title {
+        line-height: 30px;
+        margin-bottom: 15px;
+        font-weight: 600;
+        color: var(--headingColor) !important;
+    }
+    .image{
+        position: relative;
+        overflow: hidden;
+    }
+    .box_shadow1 {
+        border-radius: 10px;
+        transition: all 0.5s ease-in-out;
+    }
+
+    .box_shadow1 img {
+        border-radius: 10px 10px 0 0;
+        transition: all 0.5s ease-in-out;
+        width: 100%;
+    }
+
+    .box_shadow1 img:hover {
+        border-radius: 10px 10px 0 0;
+            transform: scale(1.2);
+    }
+    .box_shadow1 .blog_text {
+        padding: 15px 20px;
+        border-radius: 10px;
+    }
+
+    .blog_text {
+        padding-top: 15px;
+    }
+    .bg-white {
+        background-color: #fff!important;
+    }
+
+@media (min-width: 992px){
+    .products .box-filters figure {
+        width: 150px !important;
+        height: 150px !important;
+        padding: 35px 0 0 0  !important;
+    }
+    .products .box-filters figure .f-icon {
+        font-size: 110px;
+        line-height: 50px;
+    }
+}
+
+@media (min-width: 1005px){
+    .products .box-filters figure {
+        width: 150px !important;
+        height: 150px !important;
+        padding: 35px 0 0 0  !important;
+    }
+    .products .box-filters figure .f-icon {
+        font-size: 110px;
+        line-height: 50px;
+    }
+}
+
+@media (min-width: 300px){
+    .products .box-filters figure {
+        width: 150px !important;
+        height: 150px !important;
+        padding: 35px 0 0 0  !important;
+    }
+    .products .box-filters figure .f-icon {
+        font-size: 110px;
+        line-height: 50px;
+    }
+}
+
+.products .box-filters figure {
+    width: 70px;
+    height: 70px;
+}
+
+.z-index-99{
+    z-index: 99;
+}
+
+.discount-heading{
+    padding-bottom: 0;
+    padding-top: 0px;
+    background-color: var(--theme) !important;
+    margin-top: 20px;
+    margin-bottom: -50px;
+}
+
+.products .box-filters figure.active, .scroll-top, .btn.btn-main  {
+    background: var(--themebg1) !important; 
+    background: -webkit-linear-gradient(to right, var(--themebg1), var(--themebg2), var(--themebg1)) !important;  
+    background: linear-gradient(to right, var(--themebg1), var(--themebg2), var(--themebg1)) !important;
+    color: #fff;
+}
+</style>
+{% endblock %}
+<section class="header-content">
+
+    {% if sitesetting.slider_type %}
+    <!-- CAROSAL SLIDER -->
+    <div class="header-content">
+        <div class="owl-slider">
+            {% for slider in sliders %}
+                <div class="item" style="background-image:url({{slider.slider_image.url}})">
+                    <div class="box">
+                        <div class="col-md-8 col-md-offset-2 text-center">
+                            <!-- col-md-8 col-md-offset-2 is for preview only, on frontpage it needs to be replaced with "container" class -->
+                            <h2 class="title animated h1" data-animation="fadeInDown" style="color: var(--headingColor) !important;">{{slider.short_name}}</h2>
+                            <div class="animated" data-animation="fadeInUp">
+                                <!-- {{slider.short_Hesding}} -->
+                            </div>
+                            <div class="animated" data-animation="fadeInUp">
+                                <a href="{% url 'products' subCateSlug=slider.explore_to.sub_menu_slug %}" class="btn btn-main"><i class="icon icon-cart"></i> Shop now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+
+        </div> <!--/owl-slider-->
+    </div>
+
+    {% else %}
+    <!-- VIDE SLIDER -->
+    <div class="alignfull relative w-screen max-w-full-screen min-w-full bg-grey-dark h-screen-100 overflow-hidden">
+        <div data-id="3qQeIwORo7O0DS5KnSao91" class="">
+            <div class="HeroBanner__HeroBannerContainer-sc-3zma67-0 NZzCD">
+                <div
+                    class="alignfull relative w-screen max-w-full-screen min-w-full bg-grey-dark h-screen-100 overflow-hidden">
+                    <video playsinline="" muted="" autoplay="" loop="" class="h-full w-full object-cover z-10 absolute">
+                        <source
+                            src="{{sitesetting.slider_video_link}}"
+                            type="video/mp4;">
+                    </video>
+                    <div class="absolute top-0 z-10 w-full h-full bg-grey-overlay opacity-50"></div>
+                    <div class="container relative h-full flex justify-center items-center">
+                        <div class="mx-auto max-w-screen-md w-full pt-40 pb-10 md:pb-16 lg:pt-48 lg:pb-40 z-20">
+                            <div class="text-center {`${contentSize}`}">
+                                <h1
+                                    class="font-sans uppercase font-bold leading-none text-white text-7xl md:text-9xl p-0 mt-0 mb-1 sm:mb-4 md:mb-4 lg:mb-4 xl:mb-4">
+                                    Elevate The Value Of Your Property
+                                    <hr class="headingLine">
+                                </h1>
+                                <h2 class="font-normal text-white text-lg mt-0 mb-0 pt-2 pb-0 pl-0 pr-0">A full service
+                                    for
+                                    residential interiors, designed for property professionals.</h2>
+                                <div class="flex flex-col justify-center md:flex-row mt-5 md:mt-10">
+                                    <div><a target="_self"
+                                            class="Button__ButtonContainer-sc-1d00r4v-0 eoVNJq slideOutline max-w-200px bg-transparent text-white border-2 border-white shadow-white-slide-hidden hover:bg-transparent hover:shadow-white-slide-active hover:text-grey-dark mr-5 ml-5 mb-5 text-sm sans leading-1 uppercase text-center inline-block transition-all duration-500 w-200px pt-3 pb-2 pl-10 pr-10 mt-3 mb-3"
+                                            href="{% url 'blog' %}">Portfolio</a></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div
+                        class="videoButton mb-5 flex flex-col md:flex-row items-center text-white cursor-pointer group">
+                        <div
+                            class="bg-white text-black h-10 w-10 rounded-full flex justify-center items-center group-hover:opacity-70">
+                            <i class="fa fa-play text-1xl ml-1"></i>
+                        </div><span class="text-base mt-2 ml-4 mr-4 mt-1 mb-1  font-light group-hover:opacity-80">Watch
+                            the full
+                            video</span>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% endif %}
+    <!-- <video playsinline="" muted="" autoplay="" loop="" class="h-full w-full object-cover z-10 absolute">
+        <source
+            src="https://videos.ctfassets.net/58ml6jlsnfsu/8A1UPGPSG47hdIX8rzQWy/951e0cebc9fca9768dc5c322fbdf2eb8/LOFT___People_First_Design__2_.mp4"
+            type="video/mp4;">
+    </video>
+    <div class="absolute top-0 z-10 w-full h-full bg-grey-overlay opacity-50" style="background-color: #0000008c;"></div> -->
+    <!-- <div class="owl-slider">             
+
+        <div class="item" style="background-image:url({% static 'assets/images/gallery-1.jpg' %})">
+            <div class="box">
+                <div class="container">
+                    <h2 class="title animated h1" data-animation="fadeInDown">Modern furniture theme</h2>
+                    <div class="animated" data-animation="fadeInUp">
+                        Modern & powerfull template. <br /> Clean design & reponsive
+                        layout. Google fonts integration
+                    </div>
+                    <div class="animated" data-animation="fadeInUp">
+                        <a href="https://themeforest.net/item/mobel-furniture-website-template/20382155" target="_blank" class="btn btn-main" ><i class="icon icon-cart"></i> Buy this template</a>
+                    </div>
+                </div>
+            </div>
+        </div>                
+
+        <div class="item" style="background-image:url({% static 'assets/images/gallery-2.jpg' %})">
+            <div class="box">
+                <div class="container">
+                    <h2 class="title animated h1" data-animation="fadeInDown">Mobile ready!</h2>
+                    <div class="animated" data-animation="fadeInUp">Unlimited Choices. Unbeatable Prices. Free Shipping.</div>
+                    <div class="animated" data-animation="fadeInUp">Furniture category icon fonts!</div>
+                    <div class="animated" data-animation="fadeInUp">
+                        <a href="category.html" class="btn btn-clean">Get insipred</a>
+                    </div>
+                </div>
+            </div>
+        </div>                
+
+        <div class="item" style="background-image:url({% static 'assets/images/gallery-3.jpg' %})">
+            <div class="box">
+                <div class="container">
+                    <h2 class="title animated h1" data-animation="fadeInDown">
+                        Very Animate.css Friend.
+                    </h2>
+                    <div class="desc animated" data-animation="fadeInUp">
+                        Combine with animate.css. Or just use your own!.
+                    </div>
+                    <div class="desc animated" data-animation="fadeInUp">
+                        Bunch of typography effects.
+                    </div>
+                    <div class="animated" data-animation="fadeInUp">
+                        <a href="https://themeforest.net/item/mobel-furniture-website-template/20382155" target="_blank" class="btn btn-clean">Buy this template</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>  -->
+</section>
+
+<!-- 4 boxes -->
+<section class="info-icons info-icons-frontpage">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-xs-6 col-md-3 z-index-99">
+                <figure class="themeBackgroundColor">
+                    <figcaption>
+                        <i class="icon icon-layers" style="font-size: 60px; color: var(--iconColor);"></i>
+                        <span>
+                            <strong>Wide Variety</strong>
+                            <small>Are you a new customer?</small>
+                        </span>
+                    </figcaption>
+                </figure>
+            </div>
+            <div class="col-xs-6 col-md-3 z-index-99">
+                <figure class="themeBackgroundColor">
+                    <figcaption>
+                        <i class="icon icon-rocket" style="font-size: 60px; color: var(--iconColor);"></i>
+                        <span>
+                            <strong>Fast delivery</strong>
+                            <small>We're shipping all over the country</small>
+                        </span>
+                    </figcaption>
+                </figure>
+            </div>
+            <div class="col-xs-6 col-md-3 z-index-99">
+                <figure class="themeBackgroundColor">
+                    <figcaption>
+                        <i class="icon icon-star" style="font-size: 60px; color: var(--iconColor);"></i>
+                        <span>
+                            <strong>5 Star Reviews</strong>
+                            <small>Our store locations</small>
+                        </span>
+                    </figcaption>
+                </figure>
+            </div>
+            <div class="col-xs-6 col-md-3 z-index-99">
+                <figure class="themeBackgroundColor">
+                    <figcaption>
+                        <i class="icon icon-store" style="font-size: 60px; color: var(--iconColor);"></i>
+                        <span>
+                            <strong>Visit Our Stores</strong>
+                            <small>30 day money back gurantee</small>
+                        </span>
+                    </figcaption>
+                </figure>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+{% if sitesetting.should_display_banner %}
+<section class="cards discount-heading">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <img src="{{sitesetting.discount_banner.url}}" alt="">
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- <section class="cards" style="padding-bottom: 0;">
+   
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            {% for seasionsale in seasionSale %}
+            <div class="col-lg-4 col-md-6">
+                
+                    <div class="figure-grid box_shadow1">
+                        <div class="image">
+                            <a href="{% url 'products' subCateSlug=seasionsale.subcategory.sub_menu_slug %}" class="">
+                                <img src="{{seasionsale.image.url}}" alt=""  />
+                            </a>
+                        </div>
+                    </div>
+                
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section> -->
+
+
+<section class="my-blog" style="background: #fff;">
+    <div class="container-fluid">
+
+        <div class="row">
+            {% for seasionsale in seasionSale %}
+                <div class="col-sm-12 col-md-4">
+                    <article class="figure-grid box_shadow1">
+                        <a href="{% url 'products' subCateSlug=seasionsale.subcategory.sub_menu_slug %}">
+                            <div class="image" style="background-image:url({{seasionsale.image.url}})">
+                                <img src="{{seasionsale.image.url}}" alt="">
+                            </div>
+                        </a>
+                    </article>
+                </div>
+            {% endfor %}
+        </div> <!--/row-->
+        
+    </div> 
+</section>
+
+<section class="owl-icons-wrapper owl-icons-frontpage themeBackgroundColor" style="z-index: 99; margin: 0;">
+    <div class="container">
+        <header class="text-center color-white" style="margin-top: 20px;">
+            <h2 class="title">Product categories</h2>
+            <div class="text">
+                <p style="color: #fff !important;">Check out our latest collections</p>
+            </div>
+        </header>
+        <div class="owl-icons" style="margin-top: -40px;">
+
+            <!-- === icon item === -->
+            {% for submenu in subMenu %}
+                <a href="{% url 'products' subCateSlug=submenu.sub_menu_slug %}">
+                    <figure>
+                        <i class="f-icon {{submenu.icon}}"></i>
+                        <figcaption>{{submenu}}</figcaption>
+                    </figure>
+                </a>
+            {% endfor %}
+
+
+        </div> <!--/owl-icons-->
+    </div> <!--/container-->
+</section>
+
+
+<!-- <section class="cards">
+    <header>
+        <div class="row">
+            <div class="col-md-offset-2 col-md-8 text-center">
+                <h2 class="title">Design of interiors</h2>
+            </div>
+        </div>
+    </header>
+    <div class="container-fluid">
+        <div class="row">
+
+            {% for parentMenu, childMenus in allMenus.items %}
+
+            {% if forloop.counter|divisibleby:4 %}
+            <div class="col-md-8">
+                <figure>
+                    <figcaption style="background-image:url({% static 'assets/images/blog-7.jpg' %})">
+                        <img src="{% static 'assets/images/blog-1.jpg' %}" alt="">
+                    </figcaption>
+                    <a href="#" class="custom-heading-product-category">Interior design</a>
+                </figure>
+            </div>
+            {% else %}
+            <div class=" {% if forloop.counter < 3 or forloop.counter > 4 %} col-md-6 {% else %} col-md-4 {% endif %}">
+                <figure>
+                    <figcaption style="background-image:url({% static 'assets/images/blog-2.jpg' %})">
+                        <img src="{% static 'assets/images/blog-2.jpg' %}" alt="">
+                    </figcaption>
+                    <a href="#" class="custom-heading-product-category">3D Modeling</a>
+                </figure>
+            </div>
+            {% endif %}
+            {% endfor %}
+
+        </div>
+    </div>
+</section> -->
+
+
+<section id="page-products" class="products">
+
+    <div class="container-fluid">
+
+        <!-- === header title === -->
+
+        <header>
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <h2 class="title" style="color:#000 !important;">Our products</h2>
+                    <div class="text" style="color:var(--theme) !important;">
+                        <p>Check out our latest collections</p>
+                    </div>
+
+                    
+
+                    <div id="box-filters" class="box-filters">
+                        {% for category in parentCategories %}
+                            <figure data-filter=".sofa_{{category.parentCate.pk}}" {% if forloop.counter == 1 %} class="active" {% endif %} >
+                                <figcaption>
+                                    <i class="f-icon {{category.parentCate.icon}}"></i>
+                                    <span>{{category.parentCate.parent_menu}}</span>
+                                </figcaption>
+                            </figure>
+                        {% endfor %}
+                    </div> 
+
+                </div>
+            </div> 
+        </header>
+
+        <div id="box-filters-results" class="row">
+
+            {% for categories in parentCategories %}
+                {% for category in categories.products %}
+                    <div class="col-xs-6 col-sm-4 item sofa_{{categories.parentCate.pk}}">
+                        <article>
+                            <div class="info">
+                                <span class="add-favorite">
+                                    <a href="javascript:void(0);" data-title="Add to favorites" data-title-added="Added to favorites list"><i class="icon icon-heart"></i></a>
+                                </span>
+                                <span>
+                                    <a href="{% url 'productsdetail' subCategorySlug=category.slugUrl %}"><i class="icon icon-eye"></i></a>
+                                </span>
+                            </div>
+                            <a href="" class="">
+                                <div class="btn btn-add">
+                                    <i class="icon icon-cart"></i>
+                                </div>
+                            </a>
+                            <div class="figure-block">
+                                {% if category.get_discounted_percent > 0 %}
+                                            <span class="label label-info">{{category.get_discounted_percent}}% Off</span>
+                                        {% endif %}
+                                <div class="image">
+                                    <a href="{% url 'productsdetail' subCategorySlug=category.slugUrl %}">
+                                        <img src="{{category.product_image.url}}" alt="" width="360" />
+                                    </a>
+                                </div>
+                                <hr>
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-9">
+                                        <div class="text">
+                                            <h2 class="title h4"><a href="{% url 'productsdetail' subCategorySlug=category.slugUrl %}">{{category.name}}</a></h2>
+                                            {% if category.has_discount %}
+                                                <sup style="font-size: 20px; font-weight: bold; color: var(--theme) !important;">£{{category.get_discounted_price}}</sup>
+                                                <br>
+                                                <sub>£{{category.get_original_price}}</sub>
+                                            {% else %}
+                                              <sup style="font-size: 20px; font-weight: bold; color: var(--theme) !important;">£{{category.get_original_price}}</sup>
+                                              <br>
+                                              <sup></sup>
+                                            {% endif %}   
+                                        </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-3">
+                                        
+                                </div>
+                            </div>
+                            </div>
+                        </article>
+                    </div>
+                {% endfor %}
+            {% endfor %}
+        </div> <!--/row-->
+        <!-- ========================  Product info popup - quick view ======================== -->
+            <div class="popup-main mfp-hide" id="productid1">
+
+                <div class="product">
+
+                    <div class="popup-title">
+                        <div class="h1 title">Laura <small>product category</small></div>
+                    </div>
+
+                    <!-- === product gallery === -->
+
+                    <div class="owl-product-gallery">
+                        <img src="{% static 'assets/images/product-1.png' %}" alt="" width="640" />
+                        <img src="{% static 'assets/images/product-2.png' %}" alt="" width="640" />
+                        <img src="{% static 'assets/images/product-3.png' %}" alt="" width="640" />
+                        <img src="{% static 'assets/images/product-4.png' %}" alt="" width="640" />
+                    </div>
+
+                    <!-- === product-popup-footer === -->
+
+                    <div class="popup-table">
+                        <div class="popup-cell">
+                            <div class="price price-single">
+                                <span class="h3">$ 1999,00 <small>$ 2999,00</small></span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div> <!--/product-->
+            </div> 
+        <!--popup-main-->
+    </div> <!--/container-->
+</section>
+
+
+
+<!-- ========================  Instagram ======================== -->
+
+<section class="instagram">
+
+    <header>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-offset-2 col-md-8 text-center">
+                    <h2 class="h2 title" style="color: var(--theme) !important">Follow us <i class="fa fa-instagram fa-2x"></i> Instagram </h2>
+                    <div class="text">
+                        <p>@{{sitesetting.instagram}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="gallery clearfix">
+
+        {% for insta in instagram %}
+            <a class="item" target="_blank" href="{{sitesetting.instagram}}">
+                <img src="{{insta.image.url}}" alt="Alternate Text" />
+            </a>
+            {% if forloop.counter|divisibleby:6 %}
+                </div>
+                <div class="gallery clearfix">
+            {% endif %}
+        {% endfor %}
+        
+
+    </div>
+
+</section>
+{% endblock %}

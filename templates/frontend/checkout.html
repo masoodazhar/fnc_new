@@ -1,0 +1,632 @@
+{% extends "frontend/master.html" %}
+{% load static %}
+{% load cart_template_tags %}
+{% load crispy_forms_tags %}
+
+{% block card %}
+<script src="https://polyfill.io/v3/polyfill.min.js?version=3.52.1&features=fetch"></script>
+<script src="https://js.stripe.com/v3/"></script>
+
+<style>
+    * {
+  box-sizing: border-box;
+}
+/* body {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  height: 100vh;
+  width: 100vw;
+} */
+/* form {
+  width: 30vw;
+  min-width: 500px;
+  align-self: center;
+  box-shadow: 0px 0px 0px 0.5px rgba(50, 50, 93, 0.1),
+    0px 2px 5px 0px rgba(50, 50, 93, 0.1), 0px 1px 1.5px 0px rgba(0, 0, 0, 0.07);
+  border-radius: 7px;
+  padding: 40px;
+}
+input {
+  border-radius: 6px;
+  margin-bottom: 6px;
+  padding: 12px;
+  border: 1px solid rgba(50, 50, 93, 0.1);
+  height: 44px;
+  font-size: 16px;
+  width: 100%;
+  background: white;
+} */
+.result-message {
+  line-height: 22px;
+  font-size: 16px;
+}
+.result-message a {
+  color: rgb(89, 111, 214);
+  font-weight: 600;
+  text-decoration: none;
+}
+.hidden {
+  display: none;
+}
+#card-error {
+  color: rgb(214, 61, 0);
+  text-align: left;
+  font-size: 13px;
+  line-height: 17px;
+  margin-top: 12px;
+}
+#card-element {
+  border-radius: 4px 4px 0 0 ;
+  padding: 12px;
+  border: 1px solid rgba(50, 50, 93, 0.1);
+  height: 44px;
+  width: 100%;
+  background: white;
+}
+#payment-request-button {
+  margin-bottom: 32px;
+}
+/* Buttons and links */
+button {
+  background: #5469d4;
+  color: #ffffff;
+  font-family: Arial, sans-serif;
+  border-radius: 0 0 4px 4px;
+  border: 0;
+  padding: 12px 16px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  display: block;
+  transition: all 0.2s ease;
+  box-shadow: 0px 4px 5.5px 0px rgba(0, 0, 0, 0.07);
+  width: 100%;
+}
+button:hover {
+  filter: contrast(115%);
+}
+button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+/* spinner/processing state, errors */
+.spinner,
+.spinner:before,
+.spinner:after {
+  border-radius: 50%;
+}
+.spinner {
+  color: #ffffff;
+  font-size: 22px;
+  text-indent: -99999px;
+  margin: 0px auto;
+  position: relative;
+  width: 20px;
+  height: 20px;
+  box-shadow: inset 0 0 0 2px;
+  -webkit-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  transform: translateZ(0);
+}
+.spinner:before,
+.spinner:after {
+  position: absolute;
+  content: "";
+}
+.spinner:before {
+  width: 10.4px;
+  height: 20.4px;
+  background: #44cee3;
+  border-radius: 20.4px 0 0 20.4px;
+  top: -0.2px;
+  left: -0.2px;
+  -webkit-transform-origin: 10.4px 10.2px;
+  transform-origin: 10.4px 10.2px;
+  -webkit-animation: loading 2s infinite ease 1.5s;
+  animation: loading 2s infinite ease 1.5s;
+}
+.spinner:after {
+  width: 10.4px;
+  height: 10.2px;
+  background: #44cee3;
+  border-radius: 0 10.2px 10.2px 0;
+  top: -0.1px;
+  left: 10.2px;
+  -webkit-transform-origin: 0px 10.2px;
+  transform-origin: 0px 10.2px;
+  -webkit-animation: loading 2s infinite ease;
+  animation: loading 2s infinite ease;
+}
+@-webkit-keyframes loading {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes loading {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@media only screen and (max-width: 600px) {
+  form {
+    width: 80vw;
+  }
+}
+    </style>
+{% endblock %}
+
+{% block body %}
+
+        <section class="main-header" style="background-image:url({{sitesetting.payment_delivery_page_head_image.url}})">
+            <header>
+                <div class="container text-center">
+                    <h2 class="h2 title">Checkout</h2>
+                    <ol class="breadcrumb breadcrumb-inverted">
+                        <li><a href="{% url 'index' %}"><span class="icon icon-home"></span></a></li>
+                        <li><a href="{% url 'view-cart' %}">Cart items</a></li>
+                        <li><a class="active" href="{% url 'checkout' %}">Delivery & Payment</a></li>             
+                       
+                    </ol>
+                </div>
+            </header>
+        </section>
+
+        <!-- ========================  Step wrapper ======================== -->
+
+        <div class="step-wrapper">
+            <div class="container">
+
+                <div class="stepper">
+                    <ul class="row">
+                        <li class="col-md-4 active">
+                            <span data-text="Cart Items"></span>
+                        </li>
+                        <li class="col-md-4 active">
+                            <span data-text="Payment & Delivery"></span>
+                        </li>
+                        <li class="col-md-4">
+                            <span data-text="Receipt"></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========================  Checkout ======================== -->
+
+        <section class="checkout">
+            <div class="container">
+
+                <header class="hidden">
+                    <h3 class="h3 title">Checkout - Step 2</h3>
+                </header>
+
+                <!-- ========================  Cart navigation ======================== -->
+
+                <div class="clearfix">
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <a href="{% url 'view-cart' %}" class="btn btn-clean-dark"><span class="icon icon-chevron-left"></span> Back to cart</a>
+                        </div>
+                        <!-- <div class="col-xs-6 text-right">
+                            <a href="checkout-3.html" class="btn btn-main"><span class="icon icon-cart"></span> Go to payment</a>
+                        </div> -->
+                    </div>
+                </div>
+
+                <!-- ========================  Delivery ======================== -->
+
+                <div class="cart-wrapper">
+                    <form method="post" id="billingForm" novalidate>
+                    
+                    <div class="note-block">
+                        <div class="row">
+
+                            <!-- === left content === -->
+                            <span  id="billingAddress">
+                                <input type="hidden" name="user" value="{{user.pk}}">
+                                {% csrf_token %}
+                                <div class="col-md-6">
+
+                                    <!-- === login-wrapper === -->
+
+                                    <div class="login-wrapper">
+
+                                        <div class="white-block">
+
+                                            <div class="login-block login-block-signup">
+
+                                                <div class="h4"> Billing Address </div>
+
+                                                <hr />
+
+                                                <div class="row">
+
+                                                    <div class="col-md-6">
+                                                        {{form.full_name|as_crispy_field}}
+                                                    </div>
+
+                                                    <div class="col-md-6">
+                                                        {{form.company_name|as_crispy_field}}
+                                                    </div>
+
+                                                    
+
+                                                    <div class="col-md-4">
+                                                        {{form.city|as_crispy_field}}
+                                                    </div>
+
+                                                    <div class="col-md-8">
+                                                        {{form.state|as_crispy_field}}
+                                                    </div>
+                                                    
+                                                    <div class="col-md-6">
+                                                        {{form.email|as_crispy_field}}
+                                                    </div>
+
+                                                    <div class="col-md-6">
+                                                        {{form.phone|as_crispy_field}}
+                                                    </div>
+
+                                                    <div class="col-md-6">
+                                                        {{form.effective_delivery|as_crispy_field}}
+                                                    </div>
+                                                    
+                                                    <div class="col-md-6">
+                                                        {{form.zip|as_crispy_field}}
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        {{form.address|as_crispy_field}}
+                                                    </div>
+
+                                                    
+
+                                                </div>
+                                            </div> <!--/signup-->
+                                        </div>
+                                    </div> <!--/login-wrapper-->
+                                </div> <!--/col-md-6-->
+                            </span>
+                            <!-- === right content === -->
+
+                            <div class="col-md-6">
+
+                                <div class="white-block">
+
+                                    <div class="h4">Payment Section</div>
+
+                                    <hr />
+
+                                    <div class="clearfix">
+                                       <table class="table table-striped">
+                                           <thead>
+                                               <tr>
+                                                   <td>Image</td>
+                                                   <td>quanity</td>
+                                                   <td>price</td>
+                                               </tr>
+                                           </thead>
+                                           <tbody>
+                                            {% for order_item in order.items.all %}
+                                            <tr class="cart_item">
+                                                <td>
+                                                    <img src="{{order_item.item.product_image.url}}" style="width: 50px;" alt="">
+                                                </td>
+                                                <td class="product-name">{{ order_item.item.name }}<strong class="product-quantity">×
+                                                    {{ order_item.quantity }}</strong>
+                                                </td>
+                                                <td class="product-total">
+                                                    <span class="cart_price">£{{ order_item.get_final_price }}</span>
+                                                </td>
+                                            </tr>
+                                           {% endfor %}
+                                           <tr class="order-total cart_item">
+                                                <th colspan="2">Total</th>
+                                                <td><strong><span class="cart_price amount">£{{ order.get_total_price }}</span></strong></td>
+                                            </tr>
+                                           </tbody>
+                                       </table>
+                                    </div>
+                                </div>
+
+                                <hr>
+                                <!-- CARD DETAIL HERE -->
+                                <div class="payment_box payment_method_bacs dn" style="display: block;">
+                                    <p>Pay with your credit card via Stripe.  you can use the card number
+                                         with card back CVC and your card valid expiration date.</p>
+                                        <br>
+                                    <div id="card-element"><!--Stripe.js injects the Card Element--></div>
+                                </div>
+                                <br>
+                                <p id="card-error" role="alert"></p>
+
+                                <p class="result-message hidden">
+                                  Payment succeeded, see the result in your
+                                  <a href="" target="_blank">Stripe dashboard.</a> Refresh the page to pay again.
+                                </p>
+
+                                <div class="col-md-12">                                        
+                                    <span class="checkbox">
+                                        <input type="checkbox" id="terms">
+                                        <label for="terms">I have read and accepted the <a href="{% url 'termsAndCondition' %}">terms</a>, as well as read and understood our terms of <a href="{% url 'termsAndCondition' %}">business contidions</a></label>
+                                    </span>
+                                    <hr />
+                                </div>
+
+                                <div class="col-md-12">
+                                    <button type="submit" id="submitButton" class="btn btn-main btn-block">
+                                        <span id="button-text">Pay with card</span>
+                                        <div class="spinner hidden" id="spinner"></div>
+                                    </button>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                    </form>
+                </div>
+
+                <!-- ========================  Cart navigation ======================== -->
+
+                <div class="clearfix">
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <a href="{% url 'view-cart' %}" class="btn btn-clean-dark"><span class="icon icon-chevron-left"></span> Back to cart</a>
+                        </div>
+                        <!-- <div class="col-xs-6 text-right">
+                            <a href="checkout-3.html" class="btn btn-main"><span class="icon icon-cart"></span> Go to payment</a>
+                        </div> -->
+                    </div>
+                </div>
+
+
+            </div> <!--/container-->
+
+        </section>
+
+{% endblock %}
+{% block js %}
+<script>
+
+    /** START CARD SECTION HERE */
+    // Disable the button until we have Stripe set up on the page
+    var stripe = Stripe("{{ STRIPE_PUBLIC_KEY }}");
+    var csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+    document.getElementById("submitButton").disabled = true;
+
+    var elements = stripe.elements();
+    var style = {
+      base: {
+        color: "#32325d",
+        fontFamily: 'Arial, sans-serif',
+        fontSmoothing: "antialiased",
+        fontSize: "16px",
+        "::placeholder": {
+          color: "#32325d"
+        }
+      },
+      invalid: {
+        fontFamily: 'Arial, sans-serif',
+        color: "#fa755a",
+        iconColor: "#fa755a"
+      }
+    };
+    var card = elements.create("card", { style: style });
+    // Stripe injects an iframe into the DOM
+    card.mount("#card-element");
+    card.on("change", function (event) {
+      // console.log(event.empty);
+      // Disable the Pay button if there are no card details in the Element
+      document.getElementById("submitButton").disabled = event.empty;
+      document.querySelector("#card-error").textContent = event.error ? event.error.message : "";
+    });
+
+
+
+    // OTHER FORM VALIDATION
+    var form = document.getElementById("billingForm");
+    form.addEventListener("submit", function(event) {
+        loading(true);
+      event.preventDefault();
+      let addressDetails = getAddressForm();
+      if(addressDetails !== false){
+          const terms = document.getElementById("terms");
+          if(terms.checked !== true){
+            alert("Please accept terms and conditions");
+            loading(false);
+            return;
+          }
+           // Complete payment when the submit button is clicked
+            fetch("{% url 'create-payment-intent' %}", {
+                method: "POST",
+                headers: {
+                "Content-Type": "application/json",
+                'X-CSRFToken': csrftoken
+                },
+                body: JSON.stringify({
+                    email: "masoodazhar60@gmail.com"
+                })
+            })
+            .then(function(result) {
+            return result.json();
+            })
+            .then(function(data) {
+
+                // console.log("then: ",data);
+                addressDetails = getAddressForm(data.clientSecret)
+                payWithCard(stripe, card, data.clientSecret, addressDetails);
+
+            })
+            .catch(function(err) {
+                // console.log("catch: ",err);
+            });
+      }else{
+          // console.log("faild");
+          showError("Please fill required addrees details")
+      }
+     
+    });
+    
+    // Calls stripe.confirmCardPayment
+    // If the card requires authentication Stripe shows a pop-up modal to
+    // prompt the user to enter authentication details without leaving your page.
+    var payWithCard = function(stripe, card, clientSecret, addressDetails) {
+      
+      stripe
+        .confirmCardPayment(clientSecret, {
+          payment_method: {
+            card: card
+          }
+        })
+        .then(function(result) {
+          if (result.error) {
+            // Show error to your customer
+            showError(result.error.message);
+          } else {
+            // The payment succeeded!
+                orderComplete(result.paymentIntent.id);
+            
+                const url = "{% url 'checkout' %}";  
+                addressDetails.stripe_id = result.paymentIntent.id;   
+                      
+                postApi(url, addressDetails)
+                .then( (res) => {
+                    if(res.status=="success"){
+                        window.location.href = "{% url 'myOrders' %}";
+                    }
+                })
+                .catch( (err) => {
+                    // console.log(err);
+                })
+            
+
+          }
+        });
+    };
+    /* ------- UI helpers ------- */
+    // Shows a success message when the payment is complete
+    var orderComplete = function(paymentIntentId) {
+      loading(false);
+      document
+        .querySelector(".result-message a")
+        .setAttribute(
+          "href",
+          "https://dashboard.stripe.com/test/payments/" + paymentIntentId
+        );
+      document.querySelector(".result-message").classList.remove("hidden");
+      document.getElementById("submitButton").disabled = true;
+      
+    };
+    // Show the customer the error from Stripe if their card fails to charge
+    var showError = function(errorMsgText) {
+      loading(false);
+      var errorMsg = document.querySelector("#card-error");
+      errorMsg.textContent = errorMsgText;
+    //   setTimeout(function() {
+    //     errorMsg.textContent = "";
+    //   }, 4000);
+    };
+    // Show a spinner on payment submission
+    var loading = function(isLoading) {
+      if (isLoading) {
+        // Disable the button and show a spinner
+        document.getElementById("submitButton").disabled = true;
+        document.querySelector("#spinner").classList.remove("hidden");
+        // document.querySelector("#button-text").classList.add("hidden");
+      } else {
+        document.getElementById("submitButton").disabled = false;
+        document.querySelector("#spinner").classList.add("hidden");
+        // document.querySelector("#button-text").classList.remove("hidden");
+      }
+    };
+
+
+
+    /**
+     * =======================================================================
+     * form validation
+     * =======================================================================
+     **/
+
+    
+     const getAddressForm = function(stripe_id){            
+
+        const formData = new Map();
+        
+        const inputs = document.getElementById('billingAddress').getElementsByTagName('input')
+        const textareas = document.getElementById('billingAddress').getElementsByTagName('textarea')
+        const selects = document.getElementById('billingAddress').getElementsByTagName('select')
+        let isValidInput = true;
+
+        for(let input of inputs){
+            if(input.value == "" && input.name !== 'company_name'){
+                input.style.border = "1px solid red";
+                isValidInput = input.name == 'company_name'? true : false;
+               
+            } else {
+                input.style.border = "1px solid #ced4da";
+                formData.set(input.getAttribute('name'), input.value)
+            }
+        }
+        for(let input of textareas){
+            if(input.value == ""){
+                input.style.border = "1px solid red";
+                isValidInput = false;
+            } else {
+                input.style.border = "1px solid #ced4da";
+                formData.set(input.getAttribute('name'), input.value)
+            }
+        }
+        for(let input of selects){
+            if(input.value == ""){
+                input.style.border = "1px solid red";
+                isValidInput = false;
+            } else {
+                input.style.border = "1px solid #ced4da";
+                formData.set(input.getAttribute('name'), input.value)
+            }
+        }
+        // const _token = '{% csrf_token %}';
+        // formData.set('_token', _token.value )
+        formData.set("stripe_id", stripe_id);
+
+        const obj = Object.fromEntries(formData);
+        delete obj.csrfmiddlewaretoken;
+        // console.log(obj);
+       
+
+        return isValidInput?obj:false;
+        
+    }
+
+    
+    
+    const postApi = async  function(url, data){
+        
+        const response =  await fetch(url, {
+            method: "POST",
+            headers: {
+            "Content-Type": "application/json",
+            'X-CSRFToken': csrftoken
+            },
+            body: JSON.stringify(data)
+        })
+        return response.json();
+    };
+</script>
+{% endblock %}

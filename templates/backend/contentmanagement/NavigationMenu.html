@@ -1,0 +1,148 @@
+
+{% extends 'backend/master.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block body %}
+
+
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2><i class="fa fa-bars"></i> Parent <small> Main Navigation, (Category) </small></h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i
+                                class="fa fa-wrench"></i></a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="#">Settings 1</a>
+                            <a class="dropdown-item" href="#">Settings 2</a>
+                        </div>
+                    </li>
+                    <li><a class="close-link"><i class="fa fa-close"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                {% include "./tabs.html" %}
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade active show" id="home" role="tabpanel" aria-labelledby="home-tab">
+                        <h3>Manage Sliders</h3>
+                        <div class="row">
+                            
+                            <div class="{% if not NavigationSubMenuForm %} col-md-12 {% else %} col-md-6 {% endif %}">
+                                <form method="post" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            {{form.parent_menu|as_crispy_field}}
+                                        </div>
+                                        <div class="col-md-4">
+                                            {{form.short_detail|as_crispy_field}}
+                                        </div>
+                                        <div class="col-md-4">
+                                            {{form.has_products|as_crispy_field}}
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                {% if object %}  
+
+                                                <strong>
+                                                    Current icon as set.
+                                                </strong>
+                                                <img src="{% static 'dashboard/selectbox/' %}{{object.icon}}.png" alt="" width="100">
+                                                <p> please select the same icon as above from dropdown. if you don't wish to change the icon 
+                                                    <br>
+                                                    <code>Before Submitting the form</code>
+                                                    othewise selected icon will be set as default,
+                                                 </p>
+                                                 <hr>
+                                                
+                                                {% endif %}
+                                                <label for="">Please if you select icon, must select <strong>Both Home and Menu</strong> on above select box</label>
+                                                <select id="iconSelectbox" name="icon" class="form-control">
+                                                    <option value="noicon" data-icon="{% static 'dashboard/selectbox/noicon.png' %}" selected> No Icon Needed </option>
+                                                    <option value="af-icon-bookcase" data-icon="{% static 'dashboard/selectbox/af-icon-bookcase.png' %}"> bookcase </option>
+                                                    <option value="af-icon-dining-table" data-icon="{% static 'dashboard/selectbox/af-icon-dining-table.png' %}"> dining-table </option>
+                                                    <option value="f-icon-accessories" data-icon="{% static 'dashboard/selectbox/f-icon-accessories.png' %}"> accessories </option>
+                                                    <option value="f-icon-armchair" data-icon="{% static 'dashboard/selectbox/f-icon-armchair.png' %}"> armchair </option>
+                                                    <option value="f-icon-bedroom" data-icon="{% static 'dashboard/selectbox/f-icon-bedroom.png' %}"> bedroom </option>
+                                                    <option value="f-icon-carpet" data-icon="{% static 'dashboard/selectbox/f-icon-carpet.png' %}"> carpet </option>
+                                                    <option value="f-icon-chair" data-icon="{% static 'dashboard/selectbox/f-icon-chair.png' %}"> chair </option>
+                                                    <option value="f-icon-children-room" data-icon="{% static 'dashboard/selectbox/f-icon-children-room.png' %}"> children-room </option>
+                                                    <option value="f-icon-kitchen" data-icon="{% static 'dashboard/selectbox/f-icon-kitchen.png' %}"> kitchen </option>
+                                                    <option value="f-icon-lightning" data-icon="{% static 'dashboard/selectbox/f-icon-lightning.png' %}"> lightning </option>
+                                                    <option value="f-icon-media-cabinet" data-icon="{% static 'dashboard/selectbox/f-icon-media-cabinet.png' %}"> media-cabinet </option>
+                                                    <option value="f-icon-nightstand" data-icon="{% static 'dashboard/selectbox/f-icon-nightstand.png' %}"> nightstand </option>
+                                                    <option value="f-icon-office" data-icon="{% static 'dashboard/selectbox/f-icon-office.png' %}"> office </option>
+                                                    <option value="f-icon-sofa" data-icon="{% static 'dashboard/selectbox/f-icon-sofa.png' %}"> sofa </option>
+                                                    <option value="f-icon-table" data-icon="{% static 'dashboard/selectbox/f-icon-table.png' %}"> table </option>
+                                                  </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-primary">Save Changes</button>
+                                </form>                                
+                            </div>
+                           
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <table class="table table-light">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Parent Menu</th>
+                                            <th>Short Detail</h1>
+                                            <th>display in Home</th>
+                                            <th>Icon</h1>
+                                            <th width="35%">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        
+                                        {% for NavigationMenu in NavigationMenuList %}
+                                        <tr>
+                                            <td> {{forloop.counter}} </td>
+                                            <td> {{NavigationMenu.parent_menu}}</td>
+                                            <td>{{NavigationMenu.short_detail}}</td>
+                                            <td>{% if NavigationMenu.has_products %} Both Home and Menu {% else %} Only Mnu {% endif %} </td>
+                                            <td> <img src="{% static 'dashboard/selectbox/' %}{{NavigationMenu.icon}}.png" alt="" width="50"> </td>
+                                            <td style="text-align:right">
+                                                <a href="{% url 'UpdateNavigationMenu' pk=NavigationMenu.pk %}" class="btn btn-primary">Edit</a>
+                                                <a href="{% url 'DeleteNavigationMenu' pk=NavigationMenu.pk %}" onclick="return confirm('Are you sure?')" class="btn btn-danger">Delete</a>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                   
+                                </table>
+                            </div>
+                        </div>
+                    </div>                   
+                    
+                </div>
+               
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+{% block js %}
+<!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js"></script> -->
+<script src="{% static 'dashboard/selectbox/iscroll.js' %}"></script>
+<script>
+    $('#iconSelectbox').IconSelectBox(true); // isImg: boolean 
+
+    $('form').on('click', '.iconSelectbox-select-box', function(e) {
+        e.preventDefault();
+    })
+</script>
+{% endblock %}

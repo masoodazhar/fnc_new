@@ -1,0 +1,405 @@
+
+{% extends 'backend/master.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block body %}
+<style>
+    .panel-body{
+        background-color: rgb(255, 255, 255);
+    }
+</style>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2><i class="fa fa-bars"></i> Content  <small>Management System</small></h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i
+                                class="fa fa-wrench"></i></a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="#">Settings 1</a>
+                            <a class="dropdown-item" href="#">Settings 2</a>
+                        </div>
+                    </li>
+                    <li><a class="close-link"><i class="fa fa-close"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                {% include "./tabs.html" %}
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade active show" id="home" role="tabpanel" aria-labelledby="home-tab">
+                        <h5>Content Management Details</h5>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="card">
+                                    <div class="card-header text-center">
+                                        <i class="fa fa-home"></i>
+                                        <h5>Menus</h5>
+                                    </div>
+                                   <table class="table table-striped">
+                                       <tbody>
+                                           <tr>
+                                               <td scope="row">Menus</td>
+                                               <td> <a href="#">{{categories|length}}</a> </td>
+                                                
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2"><a href="{% url 'CreateNavigationMenu' %}">Explore</a></td>
+                                            </tr>
+                                       </tbody>
+                                   </table>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card">
+                                    <div class="card-header text-center">
+                                        <i class="fa fa-bars"></i>
+                                        <h5>Sub Menus</h5>
+                                    </div>
+                                   <table class="table table-striped">
+                                       <tbody>
+                                           <tr>
+                                               <td scope="row">Sub Menus s</td>
+                                               <td> <a href="#">{{subcategories|length}}</a> </td>
+                                              
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2"><a href="{% url 'CreateNavigationSubMenu' %}">Explore</a></td>
+                                            </tr>
+                                       </tbody>
+                                   </table>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card">
+                                    <div class="card-header text-center">
+                                        <i class="fa fa-product-hunt"></i>
+                                        <h5>Products</h5>
+                                    </div>
+                                   <table class="table table-striped">
+                                       <tbody>
+                                           <tr>
+                                               <td scope="row">Products</td>
+                                               <td> <a href="#">{{products|length}}</a> </td>
+                                               
+                                           </tr>
+                                           <tr>
+                                            <td colspan="2"><a href="{% url 'CreateProducts' %}">Explore</a></td>
+                                           </tr>
+                                       </tbody>
+                                   </table>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card">
+                                    <div class="card-header text-center">
+                                        <i class="fa fa-credit-card"></i>
+                                        <h5>Features</h5>
+                                    </div>
+                                   <table class="table table-striped">
+                                       <tbody>
+                                           <tr>
+                                               <td scope="row">Menus</td>
+                                               <td> 0 </td>
+                                               
+                                           </tr>
+                                           <tr>
+                                            <td colspan="2"><a href="#">Explore</a></td>
+                                           </tr>
+                                       </tbody>
+                                   </table>
+                                </div>
+                            </div>
+                        </div>
+                       <hr>
+
+                        <form action="" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                                
+                            
+                            <div class="col-md-12 col-sm-12">
+                                <div class="x_panel">
+                                    <div class="x_title">
+                                        <h2><i class="fa fa-align-left"></i> Site Settings <small>Details</small></h2>
+                                        <ul class="nav navbar-right panel_toolbox">
+                                            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                            </li>
+                                            <li class="dropdown">
+                                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i
+                                                        class="fa fa-wrench"></i></a>
+                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                    <a class="dropdown-item" href="#">Settings 1</a>
+                                                    <a class="dropdown-item" href="#">Settings 2</a>
+                                                </div>
+                                            </li>
+                                            <li><a class="close-link"><i class="fa fa-close"></i></a>
+                                            </li>
+                                        </ul>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div class="x_content">
+                            
+                                        <div class="accordion" id="accordion1" role="tablist" aria-multiselectable="true">
+                                            <!-- Contact Details -->
+                                            <div class="panel">
+                                                <a class="panel-heading collapsed" role="tab" id="headingOne1" data-toggle="collapse"
+                                                    data-parent="#accordion1" href="#collapseOne1" aria-expanded="false"
+                                                    aria-controls="collapseOne">
+                                                    <h4 class="panel-title">Contact Details</h4>
+                                                </a>
+                                                <div id="collapseOne1" class="panel-collapse in collapse" role="tabpanel"
+                                                    aria-labelledby="headingOne" style="">
+                                                    <div class="panel-body" style="padding: 10px;">
+                                                        <div class="row">
+                                                            <div class="col-md-3">
+                                                                {{form.email|as_crispy_field}}
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                {{form.contact|as_crispy_field}}
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                {{form.facebook|as_crispy_field}}
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                {{form.twitter|as_crispy_field}}
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-3">
+                                                                {{form.instagram|as_crispy_field}}
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                {{form.linkedin|as_crispy_field}}
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                {{form.pinterest|as_crispy_field}}
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                {{form.address|as_crispy_field}}
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                {{form.working_hours|as_crispy_field}}
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-3">
+                                                                <input type="submit" value="Save Changes" class="btn btn-primary">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- THEME & Pages Setting -->
+                                            <div class="panel">
+                                                <a class="panel-heading collapsed" role="tab" id="headingTwo1" data-toggle="collapse"
+                                                    data-parent="#accordion1" href="#collapseTwo1" aria-expanded="false"
+                                                    aria-controls="collapseTwo">
+                                                    <h4 class="panel-title">Theme Color & Pages, Logo </h4>
+                                                </a>
+                                                <div id="collapseTwo1" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo" >
+                                                    <div class="panel-body" style="padding: 10px;">
+                                                        <div class="row">
+                                                            <div class="col-md-3">
+                                                                {{form.theme_color|as_crispy_field}}
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                {{form.header_background|as_crispy_field}}
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                {{form.footer_background|as_crispy_field}}
+                                                            </div>
+                                                            
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-3">
+                                                                {{form.heading_color|as_crispy_field}}
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                {{form.nav_text_color|as_crispy_field}}
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                {{form.nav_text_mouse_hover_color|as_crispy_field}}
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-3">
+                                                                {{form.icons_color|as_crispy_field}}
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                {{form.nav_header_fixed_color_backgroud|as_crispy_field}}
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-3">
+                                                                <input type="submit" value="Save Changes" class="btn btn-primary">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="panel">
+                                                <a class="panel-heading collapsed" role="tab" id="headingTwo1" data-toggle="collapse"
+                                                    data-parent="#accordion1" href="#collapsImages" aria-expanded="false"
+                                                    aria-controls="collapseTwo">
+                                                    <h4 class="panel-title">Header Logo, Image(s) & Login Side Contents</h4>
+                                                </a>
+                                                <div id="collapsImages" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo" >
+                                                    <div class="panel-body" style="padding: 10px;">
+                                                        <div class="row">
+                                                            <div class="col-md-4">
+                                                                {{form.logo|as_crispy_field}}
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                {{form.blog_page_head_image|as_crispy_field}}
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                {{form.product_list_page_head_image|as_crispy_field}}
+                                                            </div>                                                            
+                                                        </div>
+                                                        <hr>
+                                                        <div class="row">
+                                                            <div class="col-md-4">
+                                                                {{form.product_detail_page_head_image|as_crispy_field}}
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                {{form.view_cart_page_head_image|as_crispy_field}}
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                {{form.payment_delivery_page_head_image|as_crispy_field}}
+                                                            </div>
+                                                        </div>
+                                                        <hr>
+                                                        <div class="row">
+                                                            <div class="col-md-4">
+                                                                {{form.receipt_page_head_image|as_crispy_field}}
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                {{form.trackeing_page_head_image|as_crispy_field}}
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                {{form.orders_page_head_image|as_crispy_field}}
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                {{form.login_background_image|as_crispy_field}}
+                                                                
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                {{form.login_page_side_detail|as_crispy_field}}
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-3">
+                                                                <input type="submit" value="Save Changes" class="btn btn-primary">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- TERMS & COndition -->
+                                            <div class="panel">
+                                                <a class="panel-heading collapsed" role="tab" id="headingThree1" data-toggle="collapse"
+                                                    data-parent="#accordion1" href="#collapseThree1" aria-expanded="false"
+                                                    aria-controls="collapseThree">
+                                                    <h4 class="panel-title">Terms & Condition</h4>
+                                                </a>
+                                                <div id="collapseThree1" class="panel-collapse collapse" role="tabpanel"
+                                                    aria-labelledby="headingThree" style="">
+                                                    <div class="panel-body" style="padding: 10px;">
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                {{form.terms_and_condion|as_crispy_field}}
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-3">
+                                                                <input type="submit" value="Save Changes" class="btn btn-primary">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Slider Setting -->
+                                            <div class="panel">
+                                                <a class="panel-heading collapsed" role="tab" id="headingThree1" data-toggle="collapse"
+                                                    data-parent="#accordion1" href="#collapseFour" aria-expanded="false"
+                                                    aria-controls="collapseThree">
+                                                    <h4 class="panel-title">Slider Setting</h4>
+                                                </a>
+                                                <div id="collapseFour" class="panel-collapse collapse" role="tabpanel"
+                                                    aria-labelledby="headingThree" style="">
+                                                    <div class="panel-body" style="padding: 10px;">
+                                                        <div class="row">                                   
+                                                            <div class="col-md-3">
+                                                                {{form.slider_video_link|as_crispy_field}}
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                {{form.slider_type|as_crispy_field}}
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-3">
+                                                                <input type="submit" value="Save Changes" class="btn btn-primary">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Other Banners -->
+                                            <div class="panel">
+                                                <a class="panel-heading collapsed" role="tab" id="headingThree1" data-toggle="collapse"
+                                                    data-parent="#accordion1" href="#collapseFive" aria-expanded="false"
+                                                    aria-controls="collapseThree">
+                                                    <h4 class="panel-title">Home Page Banner Setting</h4>
+                                                </a>
+                                                <div id="collapseFive" class="panel-collapse collapse" role="tabpanel"
+                                                    aria-labelledby="headingThree" style="">
+                                                    <div class="panel-body" style="padding: 10px;">
+                                                        <div class="row">                                   
+                                                            <div class="col-md-12">
+                                                                {{form.discount_banner|as_crispy_field}}
+                                                                <hr>
+                                                            </div>
+                                                            <div class="col-md-12">
+                                                                {{form.should_display_banner|as_crispy_field}}
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-3">
+                                                                <input type="submit" value="Save Changes" class="btn btn-primary">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                            
+                                    </div>
+                                </div>
+                            </div>      
+                                    
+                        </form>
+                    </div>                  
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

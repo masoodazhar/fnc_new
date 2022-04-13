@@ -1,0 +1,130 @@
+{% extends 'frontend/master.html' %}
+{% load static %}
+{% block body %}
+<section class="login-wrapper login-wrapper-page" style="background-image:url({{sitesetting.login_background_image.url}})">
+        <div class="wrapper">
+
+        
+            <div class="container text-center" style="padding-top:50px;">
+                
+                <div class="row my-4" style="background: #00000087;
+                padding: 20px;
+                border-radius: 10px;">
+
+                    <!-- === left content === -->
+                    <div class="col-md-6">
+                        
+                        {{sitesetting.login_page_side_detail|safe}}
+                    </div>
+                    <div class="col-md-6 ">
+                        <h2 class="h2 title">Login | Register</h2>
+                        <!-- === login-wrapper === -->
+        
+                        <div class="login-wrapper">
+        
+                            <div class="white-block">
+        
+                                <!--signin-->
+                                <form method="post" id="loginform">
+                                    <div class="login-block login-block-signin" style="display: block;">
+        
+                                        <div class="h4">Sign in <a href="javascript:void(0);" class="btn btn-main btn-xs btn-register pull-right">create an account</a></div>
+            
+                                        <hr>
+            
+                                        <div class="row">
+            
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <input type="text" name="email" id="CustomerEmail" class="form-control" placeholder="User Name">
+                                                </div>
+                                            </div>
+            
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <input type="password" value="" class="form-control" placeholder="Password" name="password" autocomplete="current-password" id="CustomerPassword">
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <p id="loginErrors"></p>
+                                            <div class="col-xs-6">
+                                                <span class="checkbox">
+                                                    <input type="checkbox" id="checkBoxId3">
+                                                    <label for="checkBoxId3">Remember me</label>
+                                                </span>
+                                            </div>
+            
+                                            <div class="col-xs-6 text-right">
+                                                <button type="submit" class="btn btn-main">Login</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                                <!--/signin-->
+                                <!--signup-->
+        
+                                <form action="" id="RegisterForm">
+                                    <div class="login-block login-block-signup" style="display: none;">
+                                        {% csrf_token %}
+                                        <div class="h4">Register now <a href="javascript:void(0);" class="btn btn-main btn-xs btn-login pull-right">Log in</a></div>
+            
+                                        <hr>
+            
+                                        <div class="row">
+            
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <input type="text" name="username" id="username" value="" class="form-control" placeholder="User Name: *">
+                                                </div>
+                                            </div>
+            
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <input type="text" name="email" id="email"  value="" class="form-control" placeholder="Email Address:">
+                                                </div>
+                                            </div>
+            
+                                            <div class="col-md-12">
+            
+                                                <div class="form-group">
+                                                    <input type="password" name="password1" id="password1"class="form-control" placeholder="Password: *">
+                                                </div>
+                                            </div>
+            
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <input type="password" name="password2" id="password2" class="form-control" placeholder="Confirm Password: *">
+                                                </div>
+                                            </div>
+            
+                                            
+            
+                                            <div class="col-md-12">
+                                                <hr>
+                                                <span class="checkbox">
+                                                    <input type="checkbox" id="checkBoxId1">
+                                                    <label for="checkBoxId1">I have read and accepted the <a href="{% url 'termsAndCondition' %}">terms</a>, as well as read and understood our terms of <a href="{% url 'termsAndCondition' %}">business contidions</a></label>
+                                                </span>
+                                                
+                                                <hr>
+                                                <p id="signupErrors"></p>
+                                            </div>
+            
+                                            <div class="col-md-12">
+                                                <input type="submit" class="btn btn-main btn-block" value="Create account">
+                                            </div>
+            
+                                        </div>
+                                    </div> <!--/signup-->
+                                </form>
+                            </div>
+                        </div> <!--/login-wrapper-->
+                    </div> <!--/col-md-6-->
+        
+                </div>
+            </div>
+      
+    </div> <!--/wrapper-->
+
+    </section>
+{% endblock %}

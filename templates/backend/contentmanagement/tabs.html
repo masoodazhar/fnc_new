@@ -1,0 +1,43 @@
+<ul class="nav nav-tabs bar_tabs" id="myTab" role="tablist">
+    
+    <li class="nav-item">
+        <a class="nav-link {% if ContentManagement %} active {% endif %}"  href="{% url 'contentmanagement' %}" role="tab"
+            aria-controls="profile" aria-selected="false">Main</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link {% if tabsSeasionSale %} active {% endif %}"  href="{% url 'CreateSeasionSale' %}" role="tab"
+            aria-controls="profile" aria-selected="false">Home Top Products</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link {% if tabslider %} active {% endif %}"  href="{% url 'CreateSliders' %}" role="tab"
+            aria-controls="profile" aria-selected="false">Sliders</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link {% if tabsabout %} active {% endif %}"  href="{% url 'CreateAbout' %}" role="tab"
+            aria-controls="step5" aria-selected="true">About</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link {% if tabsblog %} active {% endif %}"  href="{% url 'CreateBlog' %}" role="tab"
+            aria-controls="step5" aria-selected="true">Blog</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link {% if tabsmenu %} active {% endif %}"  href="{% url 'CreateNavigationMenu' %}" role="tab"
+            aria-controls="profile" aria-selected="false">Category</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link {% if tabsubmenu %} active {% endif %}"  href="{% url 'CreateNavigationSubMenu' %}" role="tab"
+            aria-controls="profile" aria-selected="false">Sub Category</a>
+    </li>
+   
+    <li class="nav-item">
+        <a class="nav-link {% if tabproducts %} active {% endif %}"  href="{% url 'CreateProducts' %}" role="tab"
+            aria-controls="step5" aria-selected="true">Products</a>
+    </li>
+
+   
+    <!-- <li class="nav-item">
+        <a class="nav-link {% if tabproducts %} active {% endif %}"  href="{% url 'CreateProducts' %}" role="tab"
+            aria-controls="step5" aria-selected="true">Contact</a>
+    </li> -->
+
+</ul>

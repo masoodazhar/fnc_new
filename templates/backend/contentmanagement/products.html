@@ -1,0 +1,379 @@
+
+{% extends 'backend/master.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block body %}
+
+<style>
+    .deleteProductImage{
+
+    }
+</style>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2><i class="fa fa-bars"></i> Manage <small>Products</small></h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i
+                                class="fa fa-wrench"></i></a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="#">Settings 1</a>
+                            <a class="dropdown-item" href="#">Settings 2</a>
+                        </div>
+                    </li>
+                    <li><a class="close-link"><i class="fa fa-close"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                {% include "./tabs.html" %}
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade active show" id="home" role="tabpanel" aria-labelledby="home-tab">
+                        <h3>Manage Products</h3>
+                        <div class="row">
+                            
+                            <div class="{% if not NavigationSubMenuForm %} col-md-12 {% else %} col-md-6 {% endif %}">
+                                <form method="post" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            {{form.category|as_crispy_field}}
+                                            <i class="fa fa-refresh fa-spin cate_loader" style="display: none; width:10px;"></i>
+                                        </div>
+                                        <div class="col-md-3">
+                                            {{form.sub_category|as_crispy_field}}
+                                        </div>
+                                        <div class="col-md-3">
+                                           
+                                        </div>
+                                       
+                                    </div>
+                                    <!-- <div class="row"  id="option_loader" style="display: none">
+                                        <div class="col-12">
+                                            <h4>Product Options</h4>
+                                        <hr>
+                                        <div class="col-1 offset-5">
+                                            <i class="fa fa-refresh fa-spin"></i>
+                                        </div>
+                                        <hr>
+                                        </div>
+                                    </div> -->
+                                  
+                                    <!-- <div class="row"  id="setFields">
+                                      
+                                    </div>
+                                    <div class="row">
+                                        {{sabcateid}}
+                                        {% for i in otherOptions %}
+                                                <script>
+                                                    setTimeout(function(){
+                                                        getOptions(1)
+                                                    }, 2000);
+                                                </script>
+                                        {% endfor %}
+                                    </div> -->
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            {{form.name|as_crispy_field}}
+                                        </div>
+                                        <div class="col-md-3">
+                                            {{form.price|as_crispy_field}}
+                                        </div>
+                                        <div class="col-md-3">
+                                            {{form.size|as_crispy_field}}
+                                        </div>
+                                        <div class="col-md-3">
+                                            {{form.sku|as_crispy_field}}
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            {{form.display_in_navbar|as_crispy_field}}
+                                        </div>
+                                        <div class="col-md-3">
+                                            {{form.has_discount|as_crispy_field}}                                            
+                                        </div>
+                                        <div class="col-md-3">
+                                            {{form.display_in_home|as_crispy_field}}                                            
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            {{form.active_feature|as_crispy_field}}                                            
+                                        </div>
+                                        <div class="col-md-3">
+                                            {{form.discoun_price|as_crispy_field}}
+                                        </div>
+                                        <div class="col-md-3">
+                                            {{form.product_image|as_crispy_field}}
+                                        </div>
+                                        
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            {{form.description|as_crispy_field}}
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">                                       
+                                        <div class="col-md-3">
+                                            <input type="button" value="+" class="btn btn-primary addFields" style="margin-top:27px">
+                                        </div>                                                                                   
+                                    </div>
+                                    <span class="setFields">
+
+                                    </span>
+                                    <br>
+                                    
+                                    <div class="row my-4">
+                                        {% if isUpdate %}
+                                            {% for images in ProductsImages %}
+                                               <div class="col-md-2">
+                                                <a href="{{images.image.url}}" target="_blank">
+                                                    <img src="{{images.image.url}}" class="mx-2 img-thumbnail" style="width:50px;" alt="">
+                                                </a>
+                                                <br>
+                                                <a href="{% url 'DeleteProductImage' pk=images.pk productId=productId %}" onclick="return confirm('Are you sure you want to delete')" class="deleteProductImage">
+                                                    delete
+                                                </a>
+                                               </div>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                    
+                                    <button class="btn btn-primary">Save Changes</button>
+                                </form>                                
+                            </div>
+                           
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <table class="table table-light">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th>Image</th>
+                                            <th>Category</th>
+                                            <th>Sub Category</th>
+                                            <th>Name</th>
+                                            <th>Price</th>
+                                            <th>Type</th>
+                                            <th>Size</th>
+                                            <th>SKU</th>
+                                            <th>Action</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for products in ProductsList %}
+                                            <tr>
+                                                <td> <img src="{{products.product_image.url}}" style="width: 50px;" alt=""> </td>
+                                                <td> {{products.category}} </td>
+                                                <td> {{products.sub_category}} </td>
+                                                <td> {{products.name}} </td>
+                                                <td> {{products.price}} </td>
+                                                <td> {{products.products_type}} </td>
+                                                <td> {{products.size}} </td>
+                                                <td> {{products.sku}} </td>
+                                                <td>
+                                                    <a href="{% url 'UpdateProducts' pk=products.pk %}" class="btn btn-primary"> Edit </a>
+                                                    <a href="{% url 'ViewProducts' pk=products.pk %}" class="btn btn-danger"> View </a>
+                                                    <a href="{% url 'DeleteProducts' pk=products.pk %}" onclick="return confirm('Are you sure you want to delete?')" class="btn btn-danger"> Delete </a>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>                   
+                    
+                </div>
+               
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+{% endblock %}
+
+
+{% block js %}
+<script>
+    $(document).ready(function(){
+
+        // add Relatives in Assemblies
+        $('.addFields').click(function(e){
+            e.preventDefault();
+              var row = `
+              <div class="row">
+                <span class="col-md-10">
+                    <div class="col-md-4">
+                        <div id="div_id_image" class="form-group">
+                            <label for="id_image" class="">
+                                Image (640, 480) PX
+                            </label>
+                            <div class="">
+                                <input type="file" name="image" class="textinput textInput form-control" id="id_image">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div id="div_id_image" class="form-group">
+                            <label for="id_image" class="">
+                                Where to display
+                            </label>
+                            <div class="">
+                                <select name="display_place" class="form-control">
+                                    <option value="0">Display with image slider</option>
+                                    <option value="1">Display in description</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </span>
+                <div class="col-md-2">
+                    <input type="button" value="-" class="btn btn-danger remrelative" style="margin-top:27px">
+                </div>
+            </div>
+              
+              `;
+
+              // select2-hidden-accessible
+              $('.setFields').append(row);
+        });
+
+        $('.setFields').delegate('.remrelative','click',function(e){
+          e.preventDefault(); 
+          $(this).parent().parent('.row').remove();
+        })
+
+        /** id_sub_category **/
+        // $('#id_sub_category').change(function(){
+        //    const option_loader = document.getElementById( "option_loader" );
+        //    option_loader.style.display = "block";
+
+           
+        //    let id_sub_category = $(this).children("option:selected").val();
+        //    const setFields = document.getElementById( "setFields" );
+        //    getOptions(id_sub_category);
+           
+
+        // });
+
+       
+
+        /** GET SUBCATEGORY ON CATEGORY CHANGE **/
+        $("#id_category").change(function(){
+            var cate_id = $(this).children("option:selected").val();
+            var cate_loader = document.getElementsByClassName("cate_loader")[0]
+            cate_loader.style.display = "block"
+            setTimeout( ()=>{
+
+                $.ajax({
+                    url : "{% url 'getSubcategoryByCategory' %}",
+                    data: {cate_id: cate_id},
+                    success: function(data){
+                        
+                        options = [];
+                        cate_loader.style.display = "none"
+                        options.push(`<option value="0">Please select sub category</option>`);
+                        data.forEach((obj) => {
+                            options.push(`<option value="${obj.id}">${obj.sub_menu}</option>`);
+                        });
+    
+                        $("#id_sub_category").html(options);
+    
+                    }
+                });
+            },1000)
+        });
+    })
+
+    const getOptions = (id_sub_category) => {
+            setTimeout( function(){
+          
+          setFields.innerHTML = "";
+           
+          $.ajax({
+              url: "{% url 'getProductOptions' %}",
+              data: {id_sub_category: id_sub_category},
+              success: function(data){
+
+                  option_loader.style.display = "none"
+                  
+                  if(data.length > 0){
+                   data.forEach(function(obj, index){
+
+                       const col3 = document.createElement( "div" )
+                       col3.className = "col-3";
+
+                       const formGroup = document.createElement( "div" )
+                       formGroup.className = "form-group";
+                       
+                       const label = document.createElement( "label" )
+                       label.setAttribute( "for" , obj.name + "_" + index)
+                       label.appendChild( document.createTextNode( obj.name ))
+                       formGroup.appendChild( label )
+
+                       if(obj.type != "select"){
+
+                           const field = document.createElement( "input" )
+                           field.setAttribute( "type" , obj.type);
+                           field.setAttribute( "id", obj.name + "_" + index )
+                           field.className = "form-control";
+                           field.setAttribute( "name", obj.name.replace("\w", "_").toLowerCase() + "_options")
+                         
+                           formGroup.appendChild( field )
+
+                       }else{
+
+                           const selectBox = document.createElement( "select" )
+                           selectBox.setAttribute( "id", obj.name + "_" + index )
+                           selectBox.setAttribute( "name", obj.name.replace(/ /g,"_").toLowerCase() + "_options")
+                           selectBox.className = "form-control";
+                           const optionBox = document.createElement( "option" )
+                           optionBox.value = "";
+                           optionBox.text = obj.name;
+
+                           selectBox.appendChild( optionBox );
+
+                           for(let option of obj.options.split(",")) {
+                               const optionBox = document.createElement( "option" )
+                               optionBox.value = option;
+                               optionBox.text = option;
+                               selectBox.appendChild( optionBox );
+                           }
+
+                           formGroup.appendChild( selectBox )
+                       }
+
+                       col3.appendChild( formGroup );
+
+                       setFields.appendChild(col3)
+
+                   });
+
+               } else {
+                   const col12 = document.createElement( "div" )
+                   col12.className = "col-12";
+                   col12.appendChild( document.createTextNode("No Options Found"))
+                   setFields.appendChild(col12)
+               }
+                 
+              }
+          });
+
+       }, 1000);
+        }
+</script>
+{% endblock %}
