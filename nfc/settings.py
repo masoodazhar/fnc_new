@@ -204,3 +204,12 @@ if DEBUG:
 else:
     STRIPE_PUBLIC_KEY = env("STRIPE_PUBLIC_KEY_LIVE")
     STRIPE_SECRET_KEY = env("STRIPE_SECRET_KEY_LIVE")
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'tech.exons62@gmail.com'
+EMAIL_HOST_PASSWORD = 'Tech_exons@6264'
+EMAIL_ADMIN = 'masoodazhar60@gmail.com'

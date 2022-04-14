@@ -62,5 +62,6 @@ urlpatterns = [
     path('customerLogin', views.customerLogin, name='customerLogin'),
     path('userlogin/', views.loginUser, name='userlogin'),
     path('usersignup/', views.signup, name='usersignup'),
+    path('sendMail/', views.sendMail, name='sendMail'),
 
 ]

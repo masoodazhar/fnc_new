@@ -19,15 +19,51 @@ from django.http.response import JsonResponse
 from django.views.generic import CreateView, UpdateView, DeleteView, TemplateView, ListView, View, DetailView
 from django.urls import reverse
 import stripe
+from django.core.mail import send_mail
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
-def customerLogin(request):
+from django.core.mail import EmailMessage
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import render_to_string
+
+from nfc.settings import EMAIL_ADMIN
+
+def sendMail(orderId=1):
+    print('sending.... in............')
     
+    order = Order.objects.get(pk=orderId)
+    
+    context = {
+        'order': order,
+    }
+
+    
+    message = render_to_string("frontend/email_template.html", context)
+   
+    msg = EmailMultiAlternatives(
+        subject="Order confirmation from NFC LIVING",
+        from_email=EMAIL_ADMIN,
+        to=[order.checkout_address.email], 
+        body='Order confirmation', 
+        reply_to=[EMAIL_ADMIN]
+        )
+    msg.attach_alternative(message, "text/html")
+    msg.send()
+    return HttpResponse('sent')
+
+
+
+def customerLogin(request):   
+     
+    print('sending....')
     nextRedirect = False
     if request.GET.get('next'):
         nextRedirect = request.GET.get('next')
     return render(request, 'frontend/login.html', {'nextRedirect': nextRedirect})
+
+
+
 
 # Create your views here.
 def loginUser(request):
@@ -69,14 +105,12 @@ def signup(request):
         form = SignUpForm()
     return HttpResponse(json.dumps({"message": "Denied"}),content_type="application/json")
 
-
 def userprofile(request):
     profile = Profile.objects.get(user=request.user.pk)    
     context = {
         'profile': profile
     }
     return render(request, 'frontend/Profile.html', context)
-
 
 def index(request):
     subMenu = NavigationSubMenu.objects.filter(status='0')
@@ -197,9 +231,9 @@ def getProductByAjax(request):
         if priceFilter:
             price = priceFilter.split('%3B')
             productQuerySet = productQuerySet.filter(price__gte=price[0], price__lte=price[1])
-        print('========================')
-        print(form_data_dict)
-        print('========================')
+        # print('========================')
+        # print(form_data_dict)
+        # print('========================')
 
 
     productQuerySetObj = Paginator(productQuerySet, 10) 
@@ -243,7 +277,6 @@ def getProductByAjax(request):
 	}
   
     return JsonResponse(context)
-
 
 def searchProducts(request):
     productsCategory = request.GET.get('productsCategory')
@@ -337,12 +370,14 @@ def productRatingSave(request):
 
     return redirect('productsdetail', subCategorySlug=subCategorySlug)
         
-
 def trackProduct(request):
     trackingId = request.GET.get('trackingId')
     check = False
     status = {}
     ordpk = Order.objects.filter(tracking_id=trackingId).first()
+    print('===========================================')
+    print(ordpk)
+    print('===========================================')
     if ordpk:
         statuses = OrderStatus.objects.filter(orderid = ordpk).first()
         if not statuses:
@@ -354,8 +389,6 @@ def trackProduct(request):
                 'orderObj': ordpk
             })
         check = True
-
-
 
     context = {
         'check': check,
@@ -403,7 +436,6 @@ def add_to_cart(request, pk):
         messages.info(request, "Item added to your cart")
         return redirect("productsdetail", subCategorySlug=item.slugUrl())
 
-
 @login_required(login_url='customerLogin')
 def remove_from_cart(request, pk):
     item = get_object_or_404(Products, pk=pk )
@@ -431,7 +463,6 @@ def remove_from_cart(request, pk):
         #add message doesnt have order
         messages.info(request, "You do not have an Order")
         return redirect("product", pk = pk)
-
 
 @login_required(login_url='customerLogin')
 def add_to_cart_increse(request, pk):
@@ -461,7 +492,6 @@ def add_to_cart_increse(request, pk):
         order.items.add(order_item)
         messages.info(request, "Item added to your cart")
         return redirect("view-cart")
-
 
 @login_required(login_url='customerLogin')
 def reduce_quantity_item(request, pk):
@@ -493,7 +523,6 @@ def reduce_quantity_item(request, pk):
         messages.info(request, "You do not have an Order")
         return redirect("view-cart")
 
-
 @login_required(login_url='customerLogin')
 def viewCart(request):
 
@@ -507,7 +536,6 @@ def viewCart(request):
 	except ObjectDoesNotExist:            
 		messages.error(request, "You do not have an order")
 		return redirect("/")
-
 
 @csrf_exempt
 def checkout(request):    
@@ -574,6 +602,7 @@ def checkout(request):
                 order.checkout_address = checkout_address
                 order.save()
                 messages.success(request, "Your order has been placed successfully. ")
+                sendMail(order.pk)
                 return JsonResponse({"status": "success"})
             else:
                 print('====================CHECKING last ESLE============')
@@ -593,7 +622,6 @@ def checkout(request):
         "STRIPE_PUBLIC_KEY": settings.STRIPE_PUBLIC_KEY
     }
     return render(request, 'frontend/checkout.html', context)
-
 
 class StripeIntentView(View):
     def post(self, request, *args, **kwargs):

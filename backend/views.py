@@ -102,6 +102,8 @@ class baackend(LoginRequiredMixin, UpdateView):
         form.fields['nav_text_color'].widget = forms.TextInput(attrs={'type': 'color'})
         form.fields['nav_text_mouse_hover_color'].widget = forms.TextInput(attrs={'type': 'color'})
         form.fields['icons_color'].widget = forms.TextInput(attrs={'type': 'color'})
+        form.fields['theme_background_color_1'].widget = forms.TextInput(attrs={'type': 'color'})
+        form.fields['theme_background_color_2'].widget = forms.TextInput(attrs={'type': 'color'})
         return form
 
     def get_context_data(self, **kwargs):

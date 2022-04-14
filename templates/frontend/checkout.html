@@ -330,7 +330,15 @@ button:disabled {
                                                     {{ order_item.quantity }}</strong>
                                                 </td>
                                                 <td class="product-total">
-                                                    <span class="cart_price">£{{ order_item.get_final_price }}</span>
+                                                  {% if order_item.item.has_discount %}
+                                                      <span style="font-size: 20px; font-weight: bold; color: #0bc7f1;">£{{order_item.item.get_discounted_price}}</span>
+                                                      <br>
+                                                      <del>£{{order_item.item.get_original_price}}</del>
+                                                  {% else %}
+                                                    <span style="font-size: 20px; font-weight: bold; color: #0bc7f1;">£{{order_item.item.get_original_price}}</span>
+                                                  
+                                                  {% endif %}   
+                                                   
                                                 </td>
                                             </tr>
                                            {% endfor %}
