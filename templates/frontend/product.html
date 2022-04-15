@@ -35,6 +35,7 @@
 
                         <!-- product flex is used only for mobile order -->
                         <!-- on mobile 'product-flex-info' goes bellow gallery 'product-flex-gallery' -->
+                        <form id="addTocartForm" action="{{singleProduct.get_add_to_cart_url}}" method="post">
 
                         <div class="col-md-4 col-sm-12 product-flex-info">
                             <div class="clearfix">
@@ -89,8 +90,7 @@
                                     </div>
 
                                     <hr />
-                                   <form id="addTocartForm" action="{{singleProduct.get_add_to_cart_url}}" method="post">
-
+                                  
                                         <!-- === info-box === -->
                                         {% for otherOptions in other_oprions %}
 
@@ -128,7 +128,7 @@
                                                 
                                     
                                         </div> -->
-                                    </form>
+                                    
                                 </div>
                             </div>
                         </div> 
@@ -145,6 +145,7 @@
                                 {% endfor %}
                             </div>
                         </div>
+                    </form>
 
                     </div>
                    
@@ -403,12 +404,12 @@
 {% block js %}
 <script>
 
-    const btnaddTocart = document.getElementById('btnaddTocart');
+    // const btnaddTocart = document.getElementById('btnaddTocart');
     const form = document.getElementById( "addTocartForm" );
 
-    btnaddTocart.addEventListener('click', function(event) {
-        form.submit();
-    });
+    // btnaddTocart.addEventListener('click', function(event) {
+    //     form.submit();
+    // });
 
     form.addEventListener("submit", function( event ) {
         event.preventDefault();

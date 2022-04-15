@@ -231,13 +231,14 @@
                         </div>
                     </article>
                     <div class="track">
-                        <div class="step {% if status.status == 'Pending' or status.status == 'Delivered' %} active {% endif %}"> <span class="icon"> <i class="fa fa-check"></i> </span> <span class="text">Order confirmed</span> </div>
-                        <div class="step {% if status.status == 'In Progress' or  status.status == 'Succeeded' or status.status == 'Delivered'%} active {% endif %}"> <span class="icon"> <i class="fa fa-user"></i> </span> <span class="text"> Picked by courier</span> </div>
-                        <div class="step {% if status.status == 'On The Way'  or status.status == 'Delivered'%} active {% endif %}"> <span class="icon"> <i class="fa fa-truck"></i> </span> <span class="text"> On the way </span> </div>
+                        <div class="step {% if status.status == 'Pending'  or status.status == 'In Progress' or status.status == 'Delivered' or status.status == 'On The Way' or status.status == 'Succeeded' %} active {% endif %}"> <span class="icon"> <i class="fa fa-check"></i> </span> <span class="text">Order confirmed</span> </div>
+                        <div class="step {% if status.status == 'In Progress' or status.status == 'Delivered' or status.status == 'On The Way' or status.status == 'Succeeded' %} active {% endif %}"> <span class="icon"> <i class="fa fa-user"></i> </span> <span class="text"> Picked by courier</span> </div>
+                        <div class="step {% if status.status == 'Delivered' or status.status == 'On The Way' or status.status == 'Succeeded'%} active {% endif %}"> <span class="icon"> <i class="fa fa-truck"></i> </span> <span class="text"> On the way </span> </div>
                         <div class="step {% if status.status == 'Delivered'  %} active {% endif %}"> <span class="icon"> <i class="fa fa-archive"></i> </span> <span class="text">Ready for pickup</span> </div>
                     </div>
                     <hr>
                     <ul class="row">
+                        <h1>Product Details - {{status}}</h1>
                         {% for Orders in status.orderObj.items.all %}
                             <li class="col-md-4">
                                 <figure class="itemside mb-3">

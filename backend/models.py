@@ -419,7 +419,7 @@ class OrderItem(models.Model):
     quantity = models.IntegerField(default=1)
 
     def __str__(self):
-        return f"{self.quantity} of {self.item.item_name}"
+        return f"{self.quantity} of {self.item.name}"
 
     def get_total_item_price(self):
         return "{:.2f}".format(self.quantity * self.item.price)

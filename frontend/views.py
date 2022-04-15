@@ -1,5 +1,3 @@
-from math import prod
-from unicodedata import category
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login
 
@@ -334,7 +332,7 @@ def productsdetail(request,subCategorySlug):
 
 
         activeStart = '<i class="fa fa-star active"></i>'*int(rating.stars)
-        totalStars = '<i class="fa fa-star"></i>'*(5-int(rating.stars))
+        totalStars = '<i class="fa fa-star" style="color:#b6b7b5 !important;"></i>'*(5-int(rating.stars))
         
         comments.append({
             'pk': rating.pk,
@@ -375,13 +373,11 @@ def trackProduct(request):
     check = False
     status = {}
     ordpk = Order.objects.filter(tracking_id=trackingId).first()
-    print('===========================================')
-    print(ordpk)
-    print('===========================================')
+    
     if ordpk:
-        statuses = OrderStatus.objects.filter(orderid = ordpk).first()
+        statuses = OrderStatus.objects.filter(orderid = ordpk.pk).first()
         if not statuses:
-            status.update({'status': 'Pending', 'deliverd_date': 'N/A'})
+            status.update({'status': 'Pending', 'deliverd_date': 'N/A', 'orderObj': ordpk})
         else:
             status.update({
                 'status': statuses.status,
