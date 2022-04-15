@@ -151,8 +151,10 @@
                                 {% endif %}
                                 
                             </div>
-                           
-                            <span class="icon icon-cross icon-delete"></span>
+                            <a href="{% url 'remove-from-cart' pk=order.item.pk %}">
+                                <span class="icon icon-cross icon-delete"></span>
+
+                            </a>
                         </div>
                         <!-- <div class="cart-block cart-block-item clearfix">
                             <div class="image">

@@ -318,6 +318,9 @@ class CreateProducts(LoginRequiredMixin, CreateView):
             display_place = self.request.POST.getlist('display_place')
         
             for index, image in enumerate(imagesData_image):
+                print('=========================display_place[index]===============')
+                print(display_place[index])
+                print('=========================display_place[index]===============')
                 imageForm = ProductImages(product=obj,  image=image, color='', display_place=display_place[index])
                 imageForm.save()
 
@@ -378,13 +381,41 @@ class UpdateProducts(LoginRequiredMixin, UpdateView):
         obj = Products.objects.get(pk=pk)
         form = ProductsForm(self.request.POST, self.request.FILES, instance=obj)
         if form.is_valid():
-            form.save()
+            current_object = form.save(commit=False)
         
-        # obj = Products.objects.latest('id')
-        images = self.request.FILES.getlist('image')
-        for image in images:
-            imageForm = ProductImages(product=obj,  image=image, color='')
-            imageForm.save()
+            # ========other options=========
+            other_options = []
+            key_value_obj = {}
+            
+            
+            # for post_request_keys, post_request_values  in self.request.POST.items():
+            #     if "_options" in post_request_keys and post_request_values != "":
+            #         key_value_obj[post_request_keys] = post_request_values
+            # other_options.append(key_value_obj)
+            # print('=======================start=====================')
+            # print(json.dumps(other_options))
+            # print(len(key_value_obj))
+            # if len(key_value_obj) >0:
+            #     current_object.save()
+            #     current_object.other_options = json.dumps(other_options)
+            # else:
+            #     current_object.save()
+
+            current_object.other_options = json.dumps(other_options)
+            current_object.save()
+
+            # print('======================end======================')
+            obj = Products.objects.latest('id')
+            imagesData_image = self.request.FILES.getlist('image')
+            display_place = self.request.POST.getlist('display_place')
+        
+            for index, image in enumerate(imagesData_image):
+                print('=========================display_place[index]===============')
+                print(display_place[index])
+                print('=========================display_place[index]===============')
+                imageForm = ProductImages(product=obj,  image=image, color='', display_place=display_place[index])
+                imageForm.save()
+                
         return redirect('CreateProducts')
 
     def get_context_data(self, **kwargs):
