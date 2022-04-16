@@ -6,12 +6,12 @@
         <section class="main-header" style="background-image:url({{sitesetting.product_detail_page_head_image.url}})">
             <header>
                 <div class="container">
-                    <h1 class="h2 title">Sofa Laura</h1>
+                    <h1 class="h2 title">{{singleProduct.category}}</h1>
                     <ol class="breadcrumb breadcrumb-inverted">
-                        <li><a href="index-2.html"><span class="icon icon-home"></span></a></li>
-                        <li><a href="category.html">Product Category</a></li>
-                        <li><a href="products-grid.html">Product Sub-category</a></li>
-                        <li><a class="active" href="product.html">Product overview</a></li>
+                        <li><a href="{% url 'index' %}"><span class="icon icon-home"></span></a></li>
+                        <li><a href="#">{{singleProduct.category}}</a></li>
+                        <li><a href="#">{{singleProduct.sub_category}}</a></li>
+                        <li><a class="active" href="#">Product overview</a></li>
                     </ol>
                 </div>
             </header>

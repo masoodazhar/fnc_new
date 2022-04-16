@@ -54,6 +54,15 @@
             background: -webkit-linear-gradient(to right, var(--themebg1), var(--themebg2), var(--themebg1)) !important;  
             background: linear-gradient(to right, var(--themebg1), var(--themebg2), var(--themebg1)) !important;
         }
+        footer .footer-showrooms {
+            padding-top: 30px;
+            padding-bottom: 30px;
+            /* margin-bottom: 15px; */
+            border-bottom: 1px solid #222;
+        }
+        .working_hourse p{
+            color: var(--navColor) !important;
+        }
     </style>
     <!--CSS bundle -->
     <link rel="stylesheet" media="all" href="{% static 'assets/css/bundle.min.css' %}" />
@@ -78,7 +87,7 @@
 
 <body>
 
-    <div class="page-loader"></div>
+    <div class="page-loader" style="background-color: {{sitesetting.theme_color}}e0;"></div>
 
     <div class="wrapper">
 

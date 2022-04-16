@@ -2,22 +2,22 @@
             <div class="container">
 
                 <!--footer showroom-->
-                <div class="footer-showroom">
+                <div class="footer-showrooms">
                     <div class="row">
-                        <div class="col-sm-8">
+                        <div class="col-sm-8 working_hourse">
                             <h2 style="color: var(--navColor);">Visit our showroom</h2>
-                            <p style="color: var(--navColor);">200 12th Ave, New York, NY 10001, USA</p>
-                            <p style="color: var(--navColor);">Mon - Sat: 10 am - 6 pm &nbsp; &nbsp; | &nbsp; &nbsp; Sun: 12pm - 2 pm</p>
+                            <p style="color: var(--navColor);">{{sitesetting.address}}</p>
+                            <p style="color: var(--navColor) !important;" class="working_hourse">{{sitesetting.working_hours|safe}}</p>
                         </div>
                         <div class="col-sm-4 text-center">
                             <a href="#" class="btn btn-clean"><span class="icon icon-map-marker"></span> Get directions</a>
-                            <div class="call-us h4"><span class="icon icon-phone-handset"></span> 333.278.06622</div>
+                            <div class="call-us h4"><span class="icon icon-phone-handset"></span> {{sitesetting.contact}} </div>
                         </div>
                     </div>
                 </div>
 
                 <!--footer links-->
-                <div class="footer-links">
+                <!-- <div class="footer-links">
                     <div class="row">
                         <div class="col-sm-4 col-md-2">
                             <h5>Browse by</h5>
@@ -52,7 +52,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
                 <!--footer social-->
 
@@ -63,11 +63,11 @@
                         </div>
                         <div class="col-sm-6 links">
                             <ul>
-                                <li><a href="{{sitesetting.facebook}}"><i class="fa fa-facebook"></i></a></li>
-                                <li><a href="{{sitesetting.twitter}}"><i class="fa fa-twitter"></i></a></li>
-                                <li><a href="{{sitesetting.pinterest}}"><i class="fa fa-pinterest"></i></a></li>
-                                <li><a href="{{sitesetting.linkedin}}"><i class="fa fa-linkedin"></i></a></li>
-                                <li><a href="{{sitesetting.instagram}}"><i class="fa fa-instagram"></i></a></li>
+                                <li><a target="_blank" href="{{sitesetting.facebook}}"><i class="fa fa-facebook"></i></a></li>
+                                <li><a target="_blank" href="{{sitesetting.twitter}}"><i class="fa fa-twitter"></i></a></li>
+                                <li><a target="_blank" href="{{sitesetting.pinterest}}"><i class="fa fa-pinterest"></i></a></li>
+                                <li><a target="_blank" href="{{sitesetting.linkedin}}"><i class="fa fa-linkedin"></i></a></li>
+                                <li><a target="_blank" href="{{sitesetting.instagram}}"><i class="fa fa-instagram"></i></a></li>
                             </ul>
                         </div>
                     </div>
