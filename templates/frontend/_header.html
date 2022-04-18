@@ -136,21 +136,27 @@
                                 <a href="{% url 'productsdetail' subCategorySlug=order.item.slugUrl %}"><img src="{{ order.item.product_image.url }}" alt=""></a>
                             </div>
                             <div class="title">
-                                <div><a href="{% url 'productsdetail' subCategorySlug=order.item.slugUrl %}">{{order.item.name}}</a></div>
-                                <small>{{order.item.category}} / {{order.item.sub_category}}</small>
+                                <div style="    width: 49%;
+                                float: left;">
+                                    <a href="{% url 'productsdetail' subCategorySlug=order.item.slugUrl %}">{{order.item.name}}</a>
+                                </div>
+                                <div style="    width: 49%;
+                                float: right;
+                                text-align: right;">
+                                    <span><strong>QTY ({{ order.quantity }})</strong></span>
+                                </div>
+                                <!-- <small>{{order.item.category}} / {{order.item.sub_category}}</small> -->
                             </div>
                             <div class="quantity">
-                                <span><strong>QTY ({{ order.quantity }})</strong></span>
-                            </div>
-                            <div class="price">
                                 {% if order.item.has_discount %} 
-                                    <span class="final">£{{order.item.get_discounted_price}}</span>
+                                    <span class="final">£{{order.item.get_discounted_price}} <span style="font-size: 10px; display: inline-flex; position: absolute;">{% if order.get_sizes_price %} + {{order.get_sizes_price}} {% endif %}</span> </span>
                                     <span class="discount">£{{order.item.get_original_price}}</span>
                                 {% else %}
-                                    <span class="final">£{{order.item.get_discounted_price}}</span>
+                                    <span class="final">£{{order.item.get_discounted_price}} <span style="font-size: 10px; display: inline-flex; position: absolute;">{% if order.get_sizes_price %} + {{order.get_sizes_price}} {% endif %}</span></span>
+                                    <span class="discount">&nbsp;</span>
                                 {% endif %}
-                                
                             </div>
+                            
                             <a href="{% url 'remove-from-cart' pk=order.item.pk %}">
                                 <span class="icon icon-cross icon-delete"></span>
 
@@ -201,7 +207,7 @@
                                     <strong>Total</strong>
                                 </div>
                                 <div>
-                                    <div class="h4 title">£ {{ OrderObject.get_total_price }}</div>
+                                    <div class="h4 title">£{{ OrderObject.get_total_price }}</div>
                                 </div>
                             </div>
                         </div>

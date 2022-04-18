@@ -415,7 +415,7 @@ class UpdateProducts(LoginRequiredMixin, UpdateView):
                 print('=========================display_place[index]===============')
                 imageForm = ProductImages(product=obj,  image=image, color='', display_place=display_place[index])
                 imageForm.save()
-                
+            
         return redirect('CreateProducts')
 
     def get_context_data(self, **kwargs):

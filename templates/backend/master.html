@@ -70,7 +70,7 @@
                             <h3>General</h3>
                             <ul class="nav side-menu">
                                 
-                                <li><a href="{% url 'CreateProductOption' %}"><i class="fa fa-bar-chart "></i> Product Options </a> </li> 
+                                <!-- <li><a href="{% url 'CreateProductOption' %}"><i class="fa fa-bar-chart "></i> Product Options </a> </li>  -->
 
                                 <li><a><i class="fa fa-home"></i> Content Management <span
                                     class="fa fa-chevron-down"></span></a>
@@ -386,7 +386,7 @@
     
     <script>
         $(document).ready(function() {    
-            $('textarea').summernote();
+            $('textarea').not('#id_product_colrs, #id_product_sizes').summernote();
             $('select').not('#iconSelectbox').select2({
                 width: 'resolve',
                 theme: 'classic',

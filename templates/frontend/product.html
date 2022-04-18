@@ -50,9 +50,9 @@
 
                                     <div class="price">
                                         {% if singleProduct.has_discount %}
-                                            <span class="h3">£{{singleProduct.get_discounted_price}} <small>£{{singleProduct.get_original_price}}</small></span>
+                                            <span class="h3">£<span class="price-change">{{singleProduct.get_discounted_price}}</span> <small>£{{singleProduct.get_original_price}}</small></span>
                                         {% else %}
-                                        <span class="h3">£{{singleProduct.get_original_price}}</span>
+                                        <span class="h3">£<span class="price-change">{{singleProduct.get_original_price}}</span> </span>
                                             
                                             
                                         {% endif %}
@@ -91,35 +91,38 @@
 
                                     <hr />
                                   
-                                        <!-- === info-box === -->
-                                        {% for otherOptions in other_oprions %}
+                                    {% if singleProduct.is_product_has_sizes %}
+                                        <div class="info-box">
+                                            <span><strong>Avalaible Sizes</strong></span>
+                                            
+                                            <div class="product-colors clearfix">
+                                                <select name="size_with_price" id="product_sizes" class="form-control">
+                                                    <option value="">Please Select</option>
+                                                {% for option in singleProduct.product_sizes|stringToArray %}                                                      
+                                                    <option value="{{option}}">{{option}}</option>
+                                                {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>
+                                    {% endif %}
 
-                                            {% if otherOptions.type == 'color' %}
-                                                <div class="info-box">
-                                                    <span><strong>{{otherOptions.name}}</strong></span>
-                                                    
-                                                    <div class="product-colors clearfix">
-                                                        {% for option in otherOptions.options|stringToArray %}      
-                                                            <span class="color-btn" style="background-color:{{option}}" {% if forloop.counter == 1 %} checked="checked" {% endif %}></span>
-                                                            <input type="radio" name="{{otherOptions.name|makeName}}" value="{{option}}">
-                                                        {% endfor %}
-                                                    </div>
-                                                </div>
-                                            {% else %}
-                                                <div class="info-box">
-                                                    <span><strong>{{otherOptions.name}}</strong></span>
-                                                    
-                                                    <div class="product-colors clearfix">
-                                                        {% for option in otherOptions.options|stringToArray %}      
-                                                            <span class="color-btn-custom color-btn-biege">{{option}}</span>
-                                                            <input type="radio" name="{{otherOptions.name|makeName}}" value="{{option}}">
-                                                        {% endfor %}                                                    
-                                                    </div>
-                                                </div>
-                                            {% endif %}
-                                        
-                                        {% endfor %}
-                                        <hr>
+                                    {% if singleProduct.is_product_has_colors %}
+                                        <div class="info-box">
+                                            <span><strong>Avalaible Colors</strong></span>
+                                            
+                                            <div class="product-colors clearfix">
+                                                <select name="color" id="" class="form-control">
+                                                    <option value="">Please Select</option>                                                   
+                                                    {% for option in singleProduct.product_colors|stringToArray %}      
+                                                        <option value="{{option}}">{{option}}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+
+                                        <!-- === info-box === -->
+                                    
                                         <!-- <div class="info-box">
                                                 <button type="submit" class="btn btn-buy-custom" data-text="Buy">
                                                     <i class="icon icon-cart"></i>
@@ -406,15 +409,32 @@
 
     // const btnaddTocart = document.getElementById('btnaddTocart');
     const form = document.getElementById( "addTocartForm" );
-
-    // btnaddTocart.addEventListener('click', function(event) {
-    //     form.submit();
-    // });
+    var lastChangedPrice = 0;
+    var defaultPriceBeforePlus = 0;
+    $("#product_sizes").change(function() {
+        
+        let product_sizes = $(this).children('option:selected').val();
+        let defaultPrice = parseFloat($('.price-change').text());
+        defaultPriceBeforePlus = defaultPriceBeforePlus==0?defaultPrice:defaultPriceBeforePlus;
+        if($.trim(product_sizes) != '' && product_sizes.includes('+'))
+        {
+            let [size, price] = product_sizes.split("+");
+            price = parseInt(price)
+            let totalAfterPlus = defaultPriceBeforePlus+price;
+            $('.price-change').text(totalAfterPlus.toFixed(2));
+        }
+        else
+        {
+            if(defaultPriceBeforePlus != 0)
+            {
+                $('.price-change').text(defaultPriceBeforePlus.toFixed(2));
+            }
+        }
+    });
 
     form.addEventListener("submit", function( event ) {
         event.preventDefault();
-
-        // const radio_buttons = document.querySelector('#addTocartForm input[type="radio"]');
+        // event.currentTarget.submit();
         const radio_buttons = form.getElementsByTagName("input");
 
         const inputs = new Map();

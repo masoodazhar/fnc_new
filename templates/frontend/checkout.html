@@ -316,7 +316,7 @@ button:disabled {
                                            <thead>
                                                <tr>
                                                    <td>Image</td>
-                                                   <td>quanity</td>
+                                                   <td>Name × quanity</td>
                                                    <td>price</td>
                                                </tr>
                                            </thead>
@@ -326,16 +326,16 @@ button:disabled {
                                                 <td>
                                                     <img src="{{order_item.item.product_image.url}}" style="width: 50px;" alt="">
                                                 </td>
-                                                <td class="product-name">{{ order_item.item.name }}<strong class="product-quantity">×
+                                                <td class="product-name">{{ order_item.item.name }}<strong class="product-quantity"> ×
                                                     {{ order_item.quantity }}</strong>
                                                 </td>
                                                 <td class="product-total">
                                                   {% if order_item.item.has_discount %}
-                                                      <span style="font-size: 20px; font-weight: bold; color: #0bc7f1;">£{{order_item.item.get_discounted_price}}</span>
+                                                      <span style="font-size: 20px; font-weight: bold; color: #0bc7f1;">£{{order_item.item.get_discounted_price}} {% if order_item.get_sizes_price %} + {{order_item.get_sizes_price}} {% endif %}</span>
                                                       <br>
                                                       <del>£{{order_item.item.get_original_price}}</del>
                                                   {% else %}
-                                                    <span style="font-size: 20px; font-weight: bold; color: #0bc7f1;">£{{order_item.item.get_original_price}}</span>
+                                                    <span style="font-size: 20px; font-weight: bold; color: #0bc7f1;">£{{order_item.item.get_original_price}} {% if order_item.get_sizes_price %} + {{order_item.get_sizes_price}} {% endif %}</span>
                                                   
                                                   {% endif %}   
                                                    

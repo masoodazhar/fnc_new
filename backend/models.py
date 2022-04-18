@@ -105,7 +105,10 @@ class Products(models.Model):
     display_in_home = models.BooleanField(default=False)
     other_options = models.TextField(default=None, blank=True, null=True)
     product_slug_url = models.CharField(max_length=255, default='', blank=True, null=True)
-
+    is_product_has_sizes = models.BooleanField(default=False)
+    is_product_has_colors = models.BooleanField(default=False)
+    product_sizes = models.CharField('defins sizes in comma seperated', max_length=255, default=None, blank=True, null=True)
+    product_colors = models.CharField('defins colors in comma seperated', max_length=255, default=None, blank=True, null=True)
 
     class Meta:
         db_table= 'products'
@@ -269,7 +272,7 @@ class SiteSetting(models.Model):
 
 class ProductOption(models.Model):
     name = models.CharField(max_length=100)
-    sub_category = models.ManyToManyField(NavigationSubMenu, null=True, verbose_name="Please Select Sub Category, The option option will apply in")
+    sub_category = models.ManyToManyField(NavigationSubMenu, null=True, verbose_name="Please Select Sub Category, The option will apply in")
     type = models.CharField(max_length=20, choices=[
         # ("text", "Text") ,
         # ("file", "Select File (images etc)"),
@@ -377,7 +380,7 @@ class WishList(models.Model):
         return str(self.productid)
 
 class Sliders(models.Model):
-    slider_image = models.ImageField('Slider Image (1500 × 1000 px)',upload_to='uploads')
+    slider_image = models.ImageField('Slider Image (1500 × 750 px)',upload_to='uploads')
     short_name = models.CharField('Short Appearance Name - like Seasion ETC',max_length=100)
     short_Hesding = models.CharField('Short Detail, Headings ETC', max_length=100)
     explore_to = models.ForeignKey(NavigationSubMenu, on_delete=models.CASCADE,verbose_name='User May Explore Related Products, Containing This Category', default=1)
@@ -417,6 +420,8 @@ class OrderItem(models.Model):
     ordered = models.BooleanField(default=False)
     item = models.ForeignKey(Products, on_delete=models.CASCADE)
     quantity = models.IntegerField(default=1)
+    size_with_price = models.CharField(max_length=100, default=None, null=True)
+    color = models.CharField(max_length=100, default=None, null=True)
 
     def __str__(self):
         return f"{self.quantity} of {self.item.name}"
@@ -436,6 +441,23 @@ class OrderItem(models.Model):
             return float(self.get_discount_item_price())
         return float(self.get_total_item_price())
 
+    def get_sizes_price(self):
+        if self.size_with_price != '' and self.size_with_price != None:
+            size, price = self.size_with_price.split('+')
+            return price
+        else:
+            return 0
+
+    def get_sizes_info(self):
+        if self.size_with_price != '':
+            size, price = self.size_with_price.split('+')
+            return size
+        else:
+            return 'default Size'
+            
+
+    
+
     class Meta:
         db_table = 'orderitem'
         ordering = ['-id']
@@ -450,7 +472,7 @@ class Order(models.Model):
     ordered = models.BooleanField(default=False)
     checkout_address = models.ForeignKey('AddressBook', on_delete=models.SET_NULL, blank=True, null=True)
     payment = models.ForeignKey('Payment', on_delete=models.SET_NULL, blank=True, null=True)
-    option_options = models.TextField(blank=True, null=True, default=[])
+    # option_options = models.TextField(blank=True, null=True, default=[])
 
     class Meta:
         db_table = 'order'
@@ -458,13 +480,21 @@ class Order(models.Model):
 
     def __str__(self):
         return self.user.username
-    
+    def get_sizes_total_price(self):
+        total = 0
+        for order_item in self.items.all():
+            if order_item.get_sizes_price() != '':
+                total += int(order_item.get_sizes_price())
+
+        return total
+
     def get_total_price(self):
         total = 0
         for order_item in self.items.all():
             total += order_item.get_final_price()
-        return "{:.2f}".format(total)
+        return "{:.2f}".format(total+self.get_sizes_total_price())
 
+    
 
 class Item(models.Model):
     item_name = models.CharField(max_length=100)

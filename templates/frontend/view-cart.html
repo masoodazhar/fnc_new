@@ -90,8 +90,13 @@
                             </div>
                             <div class="title">
                                 <div class="h4"><a href="{% url 'productsdetail' subCategorySlug=order_item.item.slugUrl %}">{{order_item.item.name}}</a></div>
-                                <div> {{order_item.item.category}} / {{order_item.item.sub_category}}</div>
+                                <div> {{order_item.item.category}} / {{order_item.get_sizes_info}}</div>
                             </div>
+
+                            <!-- <div class="title">
+                                <div class="h4"><a href="{% url 'productsdetail' subCategorySlug=order_item.item.slugUrl %}">{{order_item.get_size_info}}</a></div>
+                             
+                            </div> -->
                             <div class="custom-quantity">
 
                                 <ul>
@@ -110,10 +115,10 @@
                             <div class="price">
 
                                 {% if order_item.item.has_discount %}                              
-                                    <span class="final h3">£ {{order_item.item.get_discounted_price}}</span>
-                                    <span class="discount">£ {{order_item.item.get_original_price}}</span>
+                                    <span class="final h3">£{{order_item.item.get_discounted_price}} {% if order_item.get_sizes_price %} + {{order_item.get_sizes_price}} {% endif %} </span>
+                                    <span class="discount">£{{order_item.item.get_original_price}}</span>
                                 {% else %}
-                                    <span class="final h3">£ {{ order_item.item.get_original_price}}</span>
+                                    <span class="final h3">£{{ order_item.item.get_original_price}} {% if order_item.get_sizes_price %} + {{order_item.get_sizes_price}} {% endif %}</span>
                                 {% endif %}
                                 
                             </div>

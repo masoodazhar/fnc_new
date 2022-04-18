@@ -396,27 +396,38 @@ def trackProduct(request):
 @login_required(login_url='customerLogin')
 def add_to_cart(request, pk):
     item = get_object_or_404(Products, pk=pk)
+
+    size_with_price = request.POST.get('size_with_price', None)
+    color = request.POST.get('color', None)
+
     order_item, created = OrderItem.objects.get_or_create(
         item = item,
         user = request.user,
-        ordered = False
+        ordered = False,
+        size_with_price = size_with_price,
+        color = color
+
     )
     order_qs = Order.objects.filter(user=request.user, ordered=False)
 
     addTocartForm = request.POST
-    option_options = []
-    for k,v in addTocartForm.items():
-        print("KEY:", k, "Val:",v)
-        if k not in ["csrfmiddlewaretoken", "itemid"] :
-            option_options.append({
-                k:v
-            })
+    print('============addTocartForm============')
+    print(addTocartForm)
+    print('=============addTocartForm===========')
 
-    option_options = json.dumps(option_options)
+    # option_options = []
+    # for k,v in addTocartForm.items():
+    #     print("KEY:", k, "Val:",v)
+    #     if k not in ["csrfmiddlewaretoken", "itemid"] :
+    #         option_options.append({
+    #             k:v
+    #         })
+
+    # option_options = json.dumps(option_options)
 
     if order_qs.exists():
         order = order_qs[0]
-        if order.items.filter(item__pk=item.pk).exists():
+        if order.items.filter(item__pk=item.pk, size_with_price = size_with_price, color = color).exists():
             order_item.quantity += 1
             order_item.save()
             messages.info(request, "Added quantity Item")
@@ -427,7 +438,7 @@ def add_to_cart(request, pk):
             return redirect("productsdetail", subCategorySlug=item.slugUrl())
     else:
         ordered_date = timezone.now()
-        order = Order.objects.create(user=request.user, ordered_date=ordered_date, option_options=option_options)
+        order = Order.objects.create(user=request.user, ordered_date=ordered_date)
         order.items.add(order_item)
         messages.info(request, "Item added to your cart")
         return redirect("productsdetail", subCategorySlug=item.slugUrl())
@@ -448,9 +459,15 @@ def remove_from_cart(request, pk):
                 ordered=False
             )[0]
             order_item.delete()
-            # order_qs.delete()
-            
-            messages.info(request, "Item \""+order_item.item.name+"\" remove from your cart")
+            check_order_item_istill_in_cart = OrderItem.objects.filter(
+                user=request.user,
+                ordered=False
+            )
+            # delete the order it order item is empty
+            if check_order_item_istill_in_cart.count() < 1:
+                order_qs.delete()
+            else:
+                messages.info(request, "Item \""+order_item.item.name+"\" remove from your cart")
             return redirect("view-cart")
         else:
             messages.info(request, "This Item not in your cart")
@@ -509,6 +526,14 @@ def reduce_quantity_item(request, pk):
                 order_item.save()
             else:
                 order_item.delete()
+
+                # delete the order it order item is empty
+                check_order_item_istill_in_cart = OrderItem.objects.filter(
+                    user = request.user,
+                    ordered = False
+                )
+                if check_order_item_istill_in_cart.count() < 1:
+                    order_qs.delete()
             messages.info(request, "Item quantity was updated")
             return redirect("view-cart")
         else:
@@ -530,7 +555,7 @@ def viewCart(request):
 		return render(request, 'frontend/view-cart.html', context)
 
 	except ObjectDoesNotExist:            
-		messages.error(request, "You do not have an order")
+		# messages.error(request, "You do not have an order")
 		return redirect("/")
 
 @csrf_exempt
