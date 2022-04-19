@@ -118,21 +118,29 @@
                                     </div>
                                     <hr>
                                     <div class="row">
-                                        
-                                            <div class="col-md-3">
-                                                {{form.is_product_has_sizes|as_crispy_field}}
-                                            </div>
+                                        <div class="col-md-3">
+                                            {{form.is_product_has_sizes|as_crispy_field}}
+                                        </div>
+                                        <div class="col-md-3">
+                                            {{form.is_product_has_colors|as_crispy_field}}
+                                        </div>
+                                        <div class="col-md-3">
+                                            {{form.is_product_has_back_cushions|as_crispy_field}}
+                                        </div>
+                                    </div>
+                                    <div class="row">
                                             <div class="col-md-3">
                                                 {{form.product_sizes|as_crispy_field}}
                                             </div>
-                                            <div class="col-md-3">
-                                                {{form.is_product_has_colors|as_crispy_field}}
-                                            </div>
+                                            
                                             <div class="col-md-3">
                                                 {{form.product_colors|as_crispy_field}}
                                             </div>
-                                       
+                                            <div class="col-md-3">
+                                                {{form.product_back_cushions|as_crispy_field}}
+                                            </div>
                                     </div>
+                                    
                                     <hr>
                                     <div class="row">
                                         <div class="col-md-12">

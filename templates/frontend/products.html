@@ -192,6 +192,9 @@
                                             <i class="icon icon-cart"></i>
                                         </div>
                                     </a>
+                                    <!-- <div id="star12">
+                                        New Design
+                                    </div> -->
                                     <div class="figure-block">
                                         {% if product.details.get_discounted_percent > 0 %}
                                             <span class="label label-info">{{product.details.get_discounted_percent}}%</span>
@@ -201,7 +204,7 @@
                                                 <img src="{{product.details.product_image.url}}" alt="" width="360" />
                                             </a>
                                         </div>
-                                        <hr>
+                                        <hr style="margin-top:0px">
                                         <div class="text">
                                             <h2 class="title h4" style="color: var(--theme) !important;"><a href="{% url 'productsdetail' subCategorySlug=product.details.slugUrl %}">{{product.details.name}}</a></h2>
                                             {% if product.details.has_discount %}
@@ -433,7 +436,7 @@
                                                 <img src="${product.product_image}" alt="" />
                                             </a>
                                         </div>
-                                        <hr>
+                                        <hr style="margin-top:0px">
                                         <div class="text">
                                             <h2 class="title h4" style="color: var(--theme) !important;"><a href="${slugUrl}">${product.name}</a></h2>
                                             ${displayOriginalPrice} 

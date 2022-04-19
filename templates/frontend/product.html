@@ -62,7 +62,7 @@
                                     <!-- === info-box === -->
 
                                     <div class="info-box">
-                                        <span><strong>Maifacturer</strong></span>
+                                        <span><strong>Manufacture</strong></span>
                                         <span>{{singleProduct.sub_category}}</span>
                                     </div>
 
@@ -73,11 +73,11 @@
                                     </div> -->
                                     <!-- === info-box === -->
 
-                                    <div class="info-box">
+                                    <!-- <div class="info-box">
                                         <span><strong>Availability</strong></span>
                                         <span><i class="fa fa-check-square-o"></i> In stock</span>
                                         <span class="hidden"><i class="fa fa-truck"></i> Out of stock</span>
-                                    </div>
+                                    </div> -->
 
                                     <hr />
 
@@ -114,6 +114,21 @@
                                                 <select name="color" id="" class="form-control">
                                                     <option value="">Please Select</option>                                                   
                                                     {% for option in singleProduct.product_colors|stringToArray %}      
+                                                        <option value="{{option}}">{{option}}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+
+                                    {% if singleProduct.is_product_has_back_cushions %}
+                                        <div class="info-box">
+                                            <span><strong>Back Cushions</strong></span>
+                                            
+                                            <div class="product-colors clearfix">
+                                                <select name="back_cushions" id="" class="form-control">
+                                                    <option value="">Please Select</option>                                                   
+                                                    {% for option in singleProduct.product_back_cushions|stringToArray %}      
                                                         <option value="{{option}}">{{option}}</option>
                                                     {% endfor %}
                                                 </select>

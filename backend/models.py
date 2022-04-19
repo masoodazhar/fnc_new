@@ -109,6 +109,8 @@ class Products(models.Model):
     is_product_has_colors = models.BooleanField(default=False)
     product_sizes = models.CharField('defins sizes in comma seperated', max_length=255, default=None, blank=True, null=True)
     product_colors = models.CharField('defins colors in comma seperated', max_length=255, default=None, blank=True, null=True)
+    is_product_has_back_cushions = models.BooleanField(default=False)
+    product_back_cushions = models.CharField('defins back cushions in comma seperated', max_length=255, default=None, blank=True, null=True)
 
     class Meta:
         db_table= 'products'
@@ -422,6 +424,7 @@ class OrderItem(models.Model):
     quantity = models.IntegerField(default=1)
     size_with_price = models.CharField(max_length=100, default=None, null=True)
     color = models.CharField(max_length=100, default=None, null=True)
+    back_cushions = models.CharField(max_length=100, default=None, null=True)
 
     def __str__(self):
         return f"{self.quantity} of {self.item.name}"

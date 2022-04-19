@@ -223,7 +223,7 @@
                             </div>
                             {% if request.user|cart_item_count > 0 %}
                             <div class="col-xs-6 text-right">
-                                <a href="{% url 'checkout' %}" class="btn btn-main"><span class="icon icon-cart"></span> Checkout</a>
+                                <a href="{% url 'view-cart' %}" class="btn btn-main"><span class="icon icon-cart"></span> View Cart</a>
                             </div>
                             {% endif %}
                         </div>

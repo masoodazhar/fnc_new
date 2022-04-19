@@ -9,6 +9,8 @@ from django.urls.base import reverse
 from django.views.generic import CreateView, UpdateView, DeleteView, TemplateView, ListView
 from django.contrib.auth.models import User
 import json
+from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib import messages
 from .models import (
     About,
     Blog,
@@ -282,7 +284,6 @@ class CreateProducts(LoginRequiredMixin, CreateView):
     model = Products
     fields = '__all__'
     login_url = 'login'
-
     template_name = 'backend/contentmanagement/products.html'
     
     def post(self, form):
@@ -324,6 +325,7 @@ class CreateProducts(LoginRequiredMixin, CreateView):
                 imageForm = ProductImages(product=obj,  image=image, color='', display_place=display_place[index])
                 imageForm.save()
 
+            messages.success(self.request, "product has been added successfully!")
         return redirect('CreateProducts')
 
 
@@ -375,7 +377,7 @@ class UpdateProducts(LoginRequiredMixin, UpdateView):
     login_url = 'login'
 
     template_name = 'backend/contentmanagement/products.html'
-
+        
     def post(self, form, **kwargs):
         pk = self.kwargs.get('pk')
         obj = Products.objects.get(pk=pk)
@@ -405,7 +407,7 @@ class UpdateProducts(LoginRequiredMixin, UpdateView):
             current_object.save()
 
             # print('======================end======================')
-            obj = Products.objects.latest('id')
+          
             imagesData_image = self.request.FILES.getlist('image')
             display_place = self.request.POST.getlist('display_place')
         
@@ -415,7 +417,11 @@ class UpdateProducts(LoginRequiredMixin, UpdateView):
                 print('=========================display_place[index]===============')
                 imageForm = ProductImages(product=obj,  image=image, color='', display_place=display_place[index])
                 imageForm.save()
-            
+            messages.success(self.request, "product has been updated successfully!")
+        else:
+            print('=============form.errors===========')
+            print(form.errors) 
+            print('===========form.errors=============')
         return redirect('CreateProducts')
 
     def get_context_data(self, **kwargs):

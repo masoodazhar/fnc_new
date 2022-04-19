@@ -399,13 +399,15 @@ def add_to_cart(request, pk):
 
     size_with_price = request.POST.get('size_with_price', None)
     color = request.POST.get('color', None)
+    back_cushions = request.POST.get('back_cushions', None)
 
     order_item, created = OrderItem.objects.get_or_create(
         item = item,
         user = request.user,
         ordered = False,
         size_with_price = size_with_price,
-        color = color
+        color = color,
+        back_cushions = back_cushions
 
     )
     order_qs = Order.objects.filter(user=request.user, ordered=False)

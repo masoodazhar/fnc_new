@@ -67,6 +67,34 @@
         .quantity .discount {
             text-decoration: line-through;
         }
+
+        #star12 {
+ background: blue;
+ width: 80px;
+ height: 80px;
+ position: relative;
+}
+#star12:before, #star12:after {
+ content: "";
+ position: absolute;
+ top: 0;
+ left: 0;
+ height: 80px;
+ width: 80px;
+ background: blue;
+}
+#star12:before {
+ -webkit-transform: rotate(30deg);
+ -moz-transform: rotate(30deg);
+ -ms-transform: rotate(30deg);
+ -o-transform: rotate(30deg);
+}
+#star12:after {
+ -webkit-transform: rotate(60deg);
+ -moz-transform: rotate(60deg);
+ -ms-transform: rotate(60deg);
+ -o-transform: rotate(60deg);
+}
     </style>
     <!--CSS bundle -->
     <link rel="stylesheet" media="all" href="{% static 'assets/css/bundle.min.css' %}" />
