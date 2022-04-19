@@ -464,8 +464,8 @@ def DeleteProducts(request, pk):
     return redirect('CreateProducts')
 
 def DeleteProductImage(request, pk, productId):
-    # modelObj = ProductImages.objects.get(pk=pk)
-    # modelObj.delete()
+    modelObj = ProductImages.objects.get(pk=pk)
+    modelObj.delete()
     return redirect('UpdateProducts', pk=productId)
 
 

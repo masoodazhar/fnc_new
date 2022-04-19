@@ -483,7 +483,7 @@ class Order(models.Model):
     def get_sizes_total_price(self):
         total = 0
         for order_item in self.items.all():
-            if order_item.get_sizes_price() != '':
+            if order_item.get_sizes_price() != 0:
                 total += int(order_item.get_sizes_price())
 
         return total
