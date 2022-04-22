@@ -113,8 +113,10 @@ class Products(models.Model):
     product_back_cushions = models.CharField('defins back cushions in comma seperated', max_length=255, default=None, blank=True, null=True)
 
     class Meta:
+        unique_together = ('name', 'sub_category',)
         db_table= 'products'
         ordering = ['-id']
+
 
     def __str__(self) -> str:
         return self.name
@@ -154,10 +156,11 @@ class Products(models.Model):
         total = (self.discoun_price/self.price)*100
         return int(total)
 
-    def save(self, *args, **kwargs): # new
-        if not self.product_slug_url:
-            self.product_slug_url = slugify(self.name)
+    def save(self, *args, **kwargs):
+        self.product_slug_url = slugify(self.name+' '+self.sub_category.sub_menu)
         return super().save(*args, **kwargs)
+
+    
 
     def get_redirect_url(self):
         return reverse("UpdateProducts", kwargs={
@@ -452,7 +455,7 @@ class OrderItem(models.Model):
             return 0
 
     def get_sizes_info(self):
-        if self.size_with_price != '':
+        if self.size_with_price != '' and self.size_with_price != None:
             size, price = self.size_with_price.split('+')
             return size
         else:

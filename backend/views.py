@@ -11,6 +11,7 @@ from django.contrib.auth.models import User
 import json
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib import messages
+from django.http import HttpResponseRedirect
 from .models import (
     About,
     Blog,
@@ -326,8 +327,19 @@ class CreateProducts(LoginRequiredMixin, CreateView):
                 imageForm.save()
 
             messages.success(self.request, "product has been added successfully!")
+        else:
+            messages.warning(self.request, "Product with selected sub category already exists!")
+            return render(self.request, self.template_name, {'form': form})
         return redirect('CreateProducts')
 
+    def form_valid(self, form):
+        # This method is called when valid form data has been POSTed.
+        # It should return an HttpResponse.
+        messages.success(self.request, "Product name with subcategory already exists!")
+        print('=====================')
+        print(form.errors)
+        print('=====================')
+        return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
         context = super(CreateProducts, self).get_context_data(**kwargs)
@@ -419,9 +431,8 @@ class UpdateProducts(LoginRequiredMixin, UpdateView):
                 imageForm.save()
             messages.success(self.request, "product has been updated successfully!")
         else:
-            print('=============form.errors===========')
-            print(form.errors) 
-            print('===========form.errors=============')
+            messages.warning(self.request, "Product with selected sub category already exists!")
+            return render(self.request, self.template_name, {'form': form})
         return redirect('CreateProducts')
 
     def get_context_data(self, **kwargs):

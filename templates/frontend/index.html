@@ -338,10 +338,102 @@
                     </article>
                 </div>
             {% endfor %}
-        </div> <!--/row-->
+        </div> 
         
     </div> 
 </section>
+
+<!-- <section class="stretcher-wrapper">
+    <header class="">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-offset-2 col-md-8 text-center">
+                    <h1 class="h2 title">Popular categories</h1>
+                </div>
+            </div>
+        </div>
+    </header>    
+
+    <ul class="stretcher">
+        <li class="stretcher-item" style="background-image:url({% static 'assets/images/gallery-1.jpg' %});">
+            
+            <div class="stretcher-logo">
+                <div class="text">
+                    <span class="f-icon f-icon-bedroom"></span>
+                    <span class="text-intro">Bedroom</span>
+                </div>
+            </div>
+            
+            <figure>
+                <h4>Modern furnishing projects</h4>
+                <figcaption>New furnishing ideas</figcaption>
+            </figure>
+            
+            <a href="#">Anchor link</a>
+        </li>
+
+        
+
+        <li class="stretcher-item" style="background-image:url({% static 'assets/images/gallery-2.jpg' %});">
+            
+            <div class="stretcher-logo">
+                <div class="text">
+                    <span class="f-icon f-icon-sofa"></span>
+                    <span class="text-intro">Living room</span>
+                </div>
+            </div>
+            
+            <figure>
+                <h4>Furnishing and complements</h4>
+                <figcaption>Discover the design table collection</figcaption>
+            </figure>
+            
+            <a href="#">Anchor link</a>
+        </li>
+
+        
+
+        <li class="stretcher-item" style="background-image:url({% static 'assets/images/gallery-3.jpg' %});">
+            
+            <div class="stretcher-logo">
+                <div class="text">
+                    <span class="f-icon f-icon-office"></span>
+                    <span class="text-intro">Office</span>
+                </div>
+            </div>
+            
+            <figure>
+                <h4>Which is Best for Your Home</h4>
+                <figcaption>Wardrobes vs Walk-In Closets</figcaption>
+            </figure>
+            <a href="#">Anchor link</a>
+        </li>
+
+
+        <li class="stretcher-item" style="background-image:url({% static 'assets/images/gallery-4.jpg' %});">
+            <div class="stretcher-logo">
+                <div class="text">
+                    <span class="f-icon f-icon-bathroom"></span>
+                    <span class="text-intro">Bathroom</span>
+                </div>
+            </div>
+            <figure>
+                <h4>Keeping Things Minimal</h4>
+                <figcaption>Creating Your Very Own Bathroom</figcaption>
+            </figure>
+            <a href="#">Anchor link</a>
+        </li>
+        
+
+        <li class="stretcher-item more">
+            <div class="more-icon">
+                <span data-title-show="Show more" data-title-hide="+"></span>
+            </div>
+            <a href="#"></a>
+        </li>
+
+    </ul>
+</section> -->
 
 <section class="owl-icons-wrapper owl-icons-frontpage themeBackgroundColor" style="z-index: 99; margin: 0;">
     <div class="container">
@@ -352,8 +444,6 @@
             </div>
         </header>
         <div class="owl-icons" style="margin-top: -40px;">
-
-            <!-- === icon item === -->
             {% for submenu in subMenu %}
                 <a href="{% url 'products' subCateSlug=submenu.sub_menu_slug %}">
                     <figure>
@@ -362,10 +452,8 @@
                     </figure>
                 </a>
             {% endfor %}
-
-
-        </div> <!--/owl-icons-->
-    </div> <!--/container-->
+        </div> 
+    </div> 
 </section>
 
 
@@ -467,7 +555,7 @@
                                         <img src="{{category.product_image.url}}" alt="" width="360" />
                                     </a>
                                 </div>
-                                <hr>
+                                <hr style="margin-top:0px">
                             <div class="row">
                                 <div class="col-xs-12 col-sm-9">
                                         <div class="text">
