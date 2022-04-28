@@ -253,6 +253,8 @@ class SiteSetting(models.Model):
     theme_background_color_2 = models.CharField(max_length=10, default="#2F80ED")
     icons_color = models.CharField(max_length=10, default="lightblue")
 
+    theme = models.CharField(max_length=2, default="1", choices=[('1', 'Theme 1'), ('2', 'Theme 2')])
+
     # =================== background images ================
     blog_page_head_image = models.ImageField('Blog page head image (1920 × 300 px)',upload_to='page_headings', default='noimage.png')
     product_list_page_head_image = models.ImageField('Product list page head image (1920 × 300 px)',upload_to='page_headings', default='noimage.png')

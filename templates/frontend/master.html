@@ -1,4 +1,122 @@
 ﻿{% load static %}
+
+
+{% if sitesetting.theme == '2' %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- Mobile Web-app fullscreen -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <!-- Meta tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="favicon.ico">
+
+    <!--Title-->
+    <title>NFCLIVING</title>
+    <style>
+        :root {
+            --themebg1: {{sitesetting.theme_background_color_1}};
+            --themebg2: {{sitesetting.theme_background_color_2}};
+
+            --theme: {{sitesetting.theme_color}};
+            --headbackground: {{sitesetting.nav_header_fixed_color_backgroud}};
+            --Footbackground: {{sitesetting.footer_background}};
+            --navHeaderFixedColorBackgroud: {{sitesetting.header_background}};
+            --headingColor: {{sitesetting.heading_color}};
+            --navColor: {{sitesetting.nav_text_color}};
+            --navColorHover: {{sitesetting.nav_text_mouse_hover_color}};
+            --iconColor: {{sitesetting.icons_color}};
+        }
+        .search-product-image{
+            width: 100px;
+            display: inline;
+        }
+
+        .search-result-items-height {
+            margin: 0;
+            padding: 0;
+            overflow-y: scroll;
+            height: 100vh;
+        }
+        /* .logo img{
+            border-radius: 100% !important;
+            border: double 4px var(--headbackground) !important;
+            width: 100px !important;
+            height: 100px;
+        } */
+
+        .themeBackgroundColor, .banner {
+            background: var(--themebg1) !important; 
+            background: -webkit-linear-gradient(to right, var(--themebg1), var(--themebg2), var(--themebg1)) !important;  
+            background: linear-gradient(to right, var(--themebg1), var(--themebg2), var(--themebg1)) !important;
+        }
+        footer .footer-showrooms {
+            padding-top: 30px;
+            padding-bottom: 30px;
+            /* margin-bottom: 15px; */
+            border-bottom: 1px solid #222;
+        }
+        .working_hourse p{
+            color: var(--navColor) !important;
+        }
+
+        .quantity .discount {
+            text-decoration: line-through;
+        }
+
+        #star12 {
+        background: blue;
+        width: 80px;
+        height: 80px;
+        position: relative;
+        }
+        #star12:before, #star12:after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 80px;
+            width: 80px;
+            background: blue;
+        }
+        #star12:before {
+            -webkit-transform: rotate(30deg);
+            -moz-transform: rotate(30deg);
+            -ms-transform: rotate(30deg);
+            -o-transform: rotate(30deg);
+        }
+        #star12:after {
+            -webkit-transform: rotate(60deg);
+            -moz-transform: rotate(60deg);
+            -ms-transform: rotate(60deg);
+            -o-transform: rotate(60deg);
+        }
+    </style>
+    <!--CSS bundle -->
+    <link rel="stylesheet" media="all" href="{% static 'assets/css/bundle-2.min.css' %}" />
+
+    <!--Google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600&amp;subset=latin-ext" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'assets/css/gallery.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/style-2.css' %}">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+{% else %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -69,32 +187,32 @@
         }
 
         #star12 {
- background: blue;
- width: 80px;
- height: 80px;
- position: relative;
-}
-#star12:before, #star12:after {
- content: "";
- position: absolute;
- top: 0;
- left: 0;
- height: 80px;
- width: 80px;
- background: blue;
-}
-#star12:before {
- -webkit-transform: rotate(30deg);
- -moz-transform: rotate(30deg);
- -ms-transform: rotate(30deg);
- -o-transform: rotate(30deg);
-}
-#star12:after {
- -webkit-transform: rotate(60deg);
- -moz-transform: rotate(60deg);
- -ms-transform: rotate(60deg);
- -o-transform: rotate(60deg);
-}
+        background: blue;
+        width: 80px;
+        height: 80px;
+        position: relative;
+        }
+        #star12:before, #star12:after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 80px;
+        width: 80px;
+        background: blue;
+        }
+        #star12:before {
+        -webkit-transform: rotate(30deg);
+        -moz-transform: rotate(30deg);
+        -ms-transform: rotate(30deg);
+        -o-transform: rotate(30deg);
+        }
+        #star12:after {
+        -webkit-transform: rotate(60deg);
+        -moz-transform: rotate(60deg);
+        -ms-transform: rotate(60deg);
+        -o-transform: rotate(60deg);
+        }
     </style>
     <!--CSS bundle -->
     <link rel="stylesheet" media="all" href="{% static 'assets/css/bundle.min.css' %}" />
@@ -105,6 +223,9 @@
 
     <link rel="stylesheet" href="{% static 'assets/css/gallery.css' %}">
     <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+
+{% endif %}
+
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -122,16 +243,26 @@
     <div class="page-loader" style="background-color: {{sitesetting.theme_color}}e0;"></div>
 
     <div class="wrapper">
+        {% if sitesetting.theme == '2' %}
+            {% include 'frontend/_header2.html' %}
+        {% else %}
+            {% include 'frontend/_header.html' %}
+        {% endif %}
 
-        {% include 'frontend/_header.html' %}
         {% block body %}
         {% endblock %}
         {% include 'frontend/_footer.html' %}
+        
 
     </div> <!--/wrapper-->
 
     <!--JS bundle -->
-    <script src="{% static 'assets/js/bundle.min.js' %}"></script>
+    {% if sitesetting.theme == '2' %}
+        <script src="{% static 'assets/js/bundle-2.min.js' %}"></script>
+    {% else %}
+        <script src="{% static 'assets/js/bundle.min.js' %}"></script>
+    {% endif %}
+
     <script src="{% static 'assets/js/pagination.min.js' %}"></script>
     <!-- <script src="https://ld-wt73.template-help.com/wt_prod-19659/js/core.min.js"></script>
     <script src="https://ld-wt73.template-help.com/wt_prod-19659/js/script.js"></script> -->
@@ -236,7 +367,18 @@
             $('.productsItem').keyup(function () {
              
                var productsItem = $(this).val();
+               
                dataSearched = []
+               var div = '';
+               var theme = '{{sitesetting.theme}}';
+               theme = parseInt(theme)
+               if($.trim(productsItem) == ''){
+
+                    $('.setSearchedPrducts').html('')
+                    $('.setSearchedPrducts').removeClass('search-result-items-height')
+                }else{
+
+                
                $.ajax({
                    url: '{% url "searchProducts" %}',
                    method: 'GET',
@@ -245,7 +387,7 @@
                       
                        $.each(data.data, function(i, v){
                        
-                            console.log(v.has_discount)
+                            // console.log(v.has_discount)
                            
 
                             var price = '';
@@ -263,20 +405,46 @@
                                 `;
                             }                            
 
-                            div = `
-                            <li>
-                                <div class="figure-block">
-                                    <div class="text" style="display: inline-table;">
-                                        <h2 class="title h5" style="margin-bottom:0px;"><a href="${v.url}">${v.name}</a></h2>
-                                        ${price}
+                            if(theme == 1){
+                                div = `
+                                    <li>
+                                        <div class="figure-block">
+                                            <div class="text" style="display: inline-table;">
+                                                <h2 class="title h5" style="margin-bottom:0px;"><a href="${v.url}">${v.name}</a></h2>
+                                                ${price}
+                                            </div>
+                                            <img class="search-product-image" src="${v.image}"  alt="">
+                                        </div>
+                                    </li>
+                                    `;
+                            }
+                            
+
+                            if(theme == 2){
+                                div = `
+                                    <div class="autocomplete-suggestion" data-index="0">
+                                        <img class="search-image" src="${v.image}">
+                                        <div class="search-name"><strong>Product</strong> 
+                                            <a href="${v.url}">${v.name}</a>
+                                        </div>
+                                        <span class="search-price">
+                                            <span class="woocommerce-Price-amount amount">
+                                                <bdi>
+                                                    ${price}
+                                                </bdi>
+                                            </span>
+                                        </span>                                    
                                     </div>
-                                    <img class="search-product-image" src="${v.image}"  alt="">
-                                </div>
-                            </li>
-                            `;
+                                
+                                `;
+                            }
+
+                            
+
                             dataSearched.push(div)
                         })
-                        console.log(dataSearched.length)
+                        
+                        // console.log(dataSearched.length)
                         if(dataSearched.length>0){
                             $('.setSearchedPrducts').addClass('search-result-items-height')
                             
@@ -287,6 +455,8 @@
                     // dataSearched.clear()
                    }
                })
+            
+                }
             });
         })
     </script>

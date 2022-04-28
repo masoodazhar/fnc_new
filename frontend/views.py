@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login
 
-from backend.models import OrderStatus, Profile, AddressBook, Blog, Instagram, NavigationMenu, NavigationSubMenu, Order, OrderItem, Payment, ProductImages, ProductOption, Products, Rating, SeasionSale, Sliders
+from backend.models import OrderStatus, Profile, AddressBook, Blog, Instagram, NavigationMenu, NavigationSubMenu, Order, OrderItem, Payment, ProductImages, ProductOption, Products, Rating, SeasionSale, SiteSetting, Sliders
 from .forms import CheckoutForm, RatingForm, SignUpForm
 from django.http import HttpResponse, HttpResponseRedirect, request
 import json
@@ -161,7 +161,13 @@ def index(request):
         'parentCategories': parentCategories,
         'instagram': instagram
     }
-    return render(request, 'frontend/index.html', context)
+
+    sitesetting = SiteSetting.objects.get(pk=1)
+
+    if sitesetting.theme == '2':
+        return render(request, 'frontend/index2.html', context)
+    else:
+        return render(request, 'frontend/index.html', context)
 
 def products(request, subCateSlug):
     products = []
