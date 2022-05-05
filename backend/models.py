@@ -111,6 +111,8 @@ class Products(models.Model):
     product_colors = models.CharField('defins colors in comma seperated', max_length=255, default=None, blank=True, null=True)
     is_product_has_back_cushions = models.BooleanField(default=False)
     product_back_cushions = models.CharField('defins back cushions in comma seperated', max_length=255, default=None, blank=True, null=True)
+    dimension = models.TextField('Product dimensions',default='No Dimension')
+
 
     class Meta:
         unique_together = ('name', 'sub_category',)

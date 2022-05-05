@@ -239,17 +239,7 @@
                     </article>
                 </div>
             {% endfor %}
-            {% for seasionsale in seasionSale %}
-                <div class="col-xs-12 col-md-4">
-                    <article class="figure-grid box_shadow1">
-                        <a href="{% url 'products' subCateSlug=seasionsale.subcategory.sub_menu_slug %}">
-                            <div class="image" style="background-image:url({{seasionsale.image.url}})">
-                                <img src="{{seasionsale.image.url}}" alt="">
-                            </div>
-                        </a>
-                    </article>
-                </div>
-            {% endfor %}
+   
         </div> 
         
     </div> 

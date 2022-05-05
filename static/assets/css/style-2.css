@@ -432,7 +432,7 @@ bdi {
     position: absolute;
     width: 87%;
     margin-top: -15px;
-    height: 70vh;
+    /* height: 70vh; */
     /* overflow-y: scroll; */
     margin-left: 25px;
 }
@@ -465,7 +465,7 @@ bdi {
         position: absolute;
         width: 157%;
         margin-top: 15px;
-        height: 70vh;
+        /* height: 70vh; */
         /* overflow-y: scroll; */
         margin-left: -145px;
     }
@@ -620,7 +620,7 @@ padding: 5px;
         position: absolute;
         width: 178%;
         margin-top: 15px;
-        height: 70vh;
+        /* height: 70vh; */
         /* overflow-y: scroll; */
         margin-left: -134px;
     }
