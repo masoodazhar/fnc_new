@@ -578,10 +578,10 @@ background: -webkit-linear-gradient(to right, var(--themebg1), var(--themebg2), 
 background: linear-gradient(to right, var(--themebg1), var(--themebg2), var(--themebg1)) !important;
 color: #fff;
 }
-.col-md-4 {
+/* .col-md-4 {
 width: 33.33333%;
 padding: 5px;
-}
+} */
 
 
 
@@ -624,4 +624,66 @@ padding: 5px;
         /* overflow-y: scroll; */
         margin-left: -134px;
     }
+}
+
+/* =======================4 boxes=========================== */
+.box-4-main{
+    display: flex;
+}
+
+.box-4-icon i{
+    font-size: 55px;
+    padding: 10px;
+}
+.box-4-text{
+    margin: 17px 0 0 0;
+}
+
+.box-4-text p{
+    color: #6e6b6b !important;
+    font-size: 14px;
+}
+.box-4-text p span{
+    color: #6e6b6b !important;
+    display: block;
+    font-weight: 500;
+}
+
+@media(max-width: 991px){
+    .box-4-main{
+        display: block;
+    }
+    .box-4-icon{
+        text-align: center;
+    }
+    
+    .box-4-icon i{
+        font-size: 55px;
+        padding: 10px;
+    }
+
+    .box-4-text{
+        margin: -5px 0 0 0;
+    }
+    
+    .box-4-text p{
+        color: #6e6b6b !important;
+        text-align: center;
+        font-size: 10px;
+    }
+    .box-4-text p span{
+        color: #6e6b6b !important;
+        display: block;
+        font-weight: 500;
+    }
+
+    .padding-left-right-0{
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+    }
+    
+}
+
+.my-4{
+    margin: 10px 0px 10px 0px;
 }

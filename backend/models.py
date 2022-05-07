@@ -465,7 +465,8 @@ class OrderItem(models.Model):
         else:
             return 'default Size'
             
-
+    def get_color(self):
+        return self.color if self.color != '' and self.color != None else "Default Color"
     
 
     class Meta:

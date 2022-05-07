@@ -406,6 +406,12 @@ def add_to_cart(request, pk):
     size_with_price = request.POST.get('size_with_price', None)
     color = request.POST.get('color', None)
     back_cushions = request.POST.get('back_cushions', None)
+    qty = request.POST.get('quantity', 1)
+
+    try:
+        qty = int(qty)
+    except:
+        qty = 1
 
     order_item, created = OrderItem.objects.get_or_create(
         item = item,
@@ -420,9 +426,14 @@ def add_to_cart(request, pk):
 
     addTocartForm = request.POST
     print('============addTocartForm============')
-    print(addTocartForm)
+    print(order_item, created)
     print('=============addTocartForm===========')
 
+    if created:
+        order_item.quantity = qty
+        order_item.save()
+
+    
     # option_options = []
     # for k,v in addTocartForm.items():
     #     print("KEY:", k, "Val:",v)
@@ -435,12 +446,15 @@ def add_to_cart(request, pk):
 
     if order_qs.exists():
         order = order_qs[0]
-        if order.items.filter(item__pk=item.pk, size_with_price = size_with_price, color = color).exists():
-            order_item.quantity += 1
+        if order.items.filter(item__pk=item.pk, size_with_price = size_with_price, color = color , back_cushions=back_cushions).exists():
+            print('=============back_cushions=========', qty)
+            order_item.quantity += qty
             order_item.save()
             messages.info(request, "Added quantity Item")
             return redirect("productsdetail", subCategorySlug=item.slugUrl())
         else:
+            print('=============else=========', qty)
+            # order_item.quantity += qty
             order.items.add(order_item)
             messages.info(request, "Item added to your cart")
             return redirect("productsdetail", subCategorySlug=item.slugUrl())

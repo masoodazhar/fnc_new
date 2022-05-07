@@ -5,7 +5,10 @@ register = template.Library()
 
 @register.simple_tag(name='stringToArray')
 def stringToArray(value):
-    return value.split(',')
+    try:
+        return value.split(',')
+    except:
+        return ['No data found']
 register.filter('stringToArray', stringToArray)
 
 

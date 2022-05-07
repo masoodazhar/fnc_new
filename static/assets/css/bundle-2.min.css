@@ -17423,8 +17423,8 @@ nav .navigation-main .navbar-dropdown .navbar-box ul>li:last-child>a {
     }
     nav .navigation-main .open-menu {
         position: absolute;
-        top: -13px;
-        left: 0;
+        top: -16px;
+        left: -15px;
         width: 40px;
         height: 100%;
         color: #fff;

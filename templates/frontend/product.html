@@ -88,8 +88,16 @@
                                             <i class="added"><i class="fa fa-eye"></i> Remove from Watch list</i>
                                         </span>
                                     </div>
+                                    
+                                    <div class="info-box info-box-addto">
+                                        <span><strong>Quantity:</strong></span>
+                                        <div class="product-colors clearfix">
+                                            <input type="number" name="quantity" class="form-control" placeholder="" value="1">
+                                        </div>
 
+                                    </div>
                                     <hr />
+                                   
                                   
                                     {% if singleProduct.is_product_has_sizes %}
                                         <div class="info-box">
@@ -448,29 +456,29 @@
         }
     });
 
-    form.addEventListener("submit", function( event ) {
-        event.preventDefault();
-        // event.currentTarget.submit();
-        const radio_buttons = form.getElementsByTagName("input");
+    // form.addEventListener("submit", function( event ) {
+    //     event.preventDefault();
+    //     // event.currentTarget.submit();
+    //     const radio_buttons = form.getElementsByTagName("input");
 
-        const inputs = new Map();
-        let counter = 0;
-        for(let tag of radio_buttons){
-            if(tag.checked == true){
-                counter++;
-            }
-            inputs.set(tag.name, tag.ELEMENT_NODE);
-        }
-        console.log("checkd:", counter);
-        const totalLength = Array.from(inputs.keys()).length;
+    //     const inputs = new Map();
+    //     let counter = 0;
+    //     for(let tag of radio_buttons){
+    //         if(tag.checked == true){
+    //             counter++;
+    //         }
+    //         inputs.set(tag.name, tag.ELEMENT_NODE);
+    //     }
+    //     console.log("checkd:", counter);
+    //     const totalLength = Array.from(inputs.keys()).length;
         
-        if(!atLeastOneRadio(totalLength, counter)){
-            alert(`Please select Required Option(s) are: ${ Array.from(inputs.keys()) }`);
-        }else{
-            event.currentTarget.submit();
-        }
+    //     if(!atLeastOneRadio(totalLength, counter)){
+    //         alert(`Please select Required Option(s) are: ${ Array.from(inputs.keys()) }`);
+    //     }else{
+    //         event.currentTarget.submit();
+    //     }
         
-    });
+    // });
     
     function atLeastOneRadio(length, checkedElem) {
         return (checkedElem > (length-1));

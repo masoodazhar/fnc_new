@@ -90,7 +90,7 @@
                             </div>
                             <div class="title">
                                 <div class="h4"><a href="{% url 'productsdetail' subCategorySlug=order_item.item.slugUrl %}">{{order_item.item.name}}</a></div>
-                                <div> {{order_item.item.category}} / {{order_item.get_sizes_info}}</div>
+                                <div> {{order_item.item.category}} / {{order_item.get_sizes_info}} / {{order_item.get_color}}</div>
                             </div>
 
                             <!-- <div class="title">
