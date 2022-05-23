@@ -84,6 +84,15 @@ def deliveredOrders(request):
     }
     return render(request,'backend/OrdersAndShipping/deliveredOrders.html', context)
 
+def orderDetails(request, orederid):
+
+    orders = Order.objects.get(pk=orederid)
+
+    context = {
+        'orders': orders.items.all()
+    }
+    return render(request,'backend/OrdersAndShipping/Orders_detials.html', context)
+
 class baackend(LoginRequiredMixin, UpdateView):
 
     def get_object(self):

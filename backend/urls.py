@@ -37,6 +37,7 @@ from .views import (
     UsersOrders,
     processedOrders,
     deliveredOrders,
+    orderDetails,
     # siteSetting,
 
     CreateSeasionSale,
@@ -92,9 +93,10 @@ urlpatterns = [
     path('UpdateInstagram/<int:pk>/update', UpdateInstagram.as_view(), name='UpdateInstagram'),
     path('DeleteInstagram/<int:pk>/delete', DeleteInstagram, name='DeleteInstagram'),
 
-    path('UsersOrders', UsersOrders, name='UsersOrders'),
-    path('processedOrders', processedOrders, name='processedOrders'),
-    path('deliveredOrders', deliveredOrders, name='deliveredOrders'),
+    path('UsersOrders/', UsersOrders, name='UsersOrders'),
+    path('processedOrders/', processedOrders, name='processedOrders'),
+    path('deliveredOrders/', deliveredOrders, name='deliveredOrders'),
+    path('orderDetails/<int:orederid>', orderDetails, name='orderDetails'),
 
     # path('siteSetting/<int:pk>', siteSetting, name='SiteSetting'),
     # path('Blog/<int:pk>/Edit', Blog.as_view(), name='Blog'),
